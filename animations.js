@@ -46,21 +46,16 @@ gs.textContent = `
   nav a.xr-active{font-weight:600;text-decoration:underline;text-underline-offset:4px}
   .xr-cross{position:fixed;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);animation:xr-cross .5s ease forwards;overflow:visible}
   @keyframes xr-cross{0%{opacity:.9;transform:translate(-50%,-50%) scale(1) rotate(0deg)}100%{opacity:0;transform:translate(-50%,-50%) scale(2) rotate(45deg)}}
-  #xr-panel{position:fixed;bottom:1.5rem;right:1.5rem;z-index:9998;font-family:system-ui,sans-serif;font-size:13px}
-  #xr-toggle{width:44px;height:44px;border-radius:50%;background:#7f77dd;color:#fff;border:none;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(127,119,221,.5);transition:transform .2s,box-shadow .2s;margin-left:auto}
-  #xr-toggle:hover{transform:scale(1.1);box-shadow:0 6px 22px rgba(127,119,221,.6)}
-  #xr-drawer{display:none;flex-direction:column;gap:4px;background:#12122a;border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:14px 16px;margin-bottom:10px;min-width:230px;box-shadow:0 8px 32px rgba(0,0,0,.5);color:#e0e0e0}
-  #xr-drawer.open{display:flex}
-  #xr-drawer h4{margin:0 0 10px;font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:#9d97e8;font-weight:600}
-  .xr-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:3px 0}
-  .xr-row label{cursor:pointer;color:#ccc;user-select:none}
+  .xr-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0;border-radius:8px;padding:8px 12px}
+  .xr-row label{cursor:pointer;color:var(--text-primary);user-select:none}
   .xr-sw{position:relative;width:34px;height:18px;flex-shrink:0}
   .xr-sw input{opacity:0;width:0;height:0}
-  .xr-sl{position:absolute;inset:0;background:#3a3a5c;border-radius:18px;cursor:pointer;transition:background .25s}
+  .xr-sl{position:absolute;inset:0;background:var(--text-secondary);opacity:0.3;border-radius:18px;cursor:pointer;transition:background .25s}
   .xr-sl::before{content:'';position:absolute;width:13px;height:13px;left:2.5px;top:2.5px;background:#fff;border-radius:50%;transition:transform .25s}
-  .xr-sw input:checked+.xr-sl{background:#7f77dd}
+  .xr-sw input:checked+.xr-sl{background:var(--accent);opacity:1}
   .xr-sw input:checked+.xr-sl::before{transform:translateX(15px)}
-  #xr-reload-note{font-size:11px;color:#888;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.08);text-align:center}
+  #xr-reload-note{font-size:11px;color:var(--text-secondary);margin-top:8px;padding-top:8px;border-top:1px solid var(--header-border);text-align:center}
+  #xr-settings-panel .xr-row{background:var(--page-bg);border:1px solid var(--header-border);margin-bottom:4px}
 `;
 document.head.appendChild(gs);
 
@@ -239,8 +234,9 @@ if (S.counterAnim) {
 }
 
 /* ═══════════════════════════════════════════
-   FLOATING SETTINGS PANEL
+   FLOATING SETTINGS PANEL (only on non-settings pages)
    ═══════════════════════════════════════════ */
+
 const LABELS = {
   scrollReveal: 'Scroll reveal',
   typewriter:   'Typewriter effect',
@@ -254,14 +250,7 @@ const LABELS = {
   counterAnim:  'Number counter',
 };
 
-const panel   = document.createElement('div');
-panel.id = 'xr-panel';
-
-const drawer  = document.createElement('div');
-drawer.id = 'xr-drawer';
-drawer.innerHTML = '<h4>✦ Animations</h4>';
-
-Object.keys(LABELS).forEach(key => {
+function createAnimationToggle(key) {
   const row = document.createElement('div');
   row.className = 'xr-row';
 
@@ -273,24 +262,184 @@ Object.keys(LABELS).forEach(key => {
   sw.className = 'xr-sw';
   const inp = document.createElement('input');
   inp.type = 'checkbox'; inp.id = `xr-sw-${key}`; inp.checked = S[key];
-  inp.addEventListener('change', () => { saveSetting(key, inp.checked); location.reload(); });
+  inp.addEventListener('change', () => { 
+    saveSetting(key, inp.checked);
+    // Toggle animations dynamically without reload
+    applyAnimationSetting(key, inp.checked);
+  });
   const sl  = document.createElement('span'); sl.className = 'xr-sl';
   sw.appendChild(inp); sw.appendChild(sl);
 
   row.appendChild(lbl); row.appendChild(sw);
-  drawer.appendChild(row);
-});
+  return row;
+}
 
-const note = document.createElement('p');
-note.id = 'xr-reload-note';
-note.textContent = 'Changes apply on reload';
-drawer.appendChild(note);
+// Populate settings page controls if on settings.html
+const settingsPanel = document.getElementById('xr-settings-panel');
+if (settingsPanel) {
+  Object.keys(LABELS).forEach(key => {
+    settingsPanel.appendChild(createAnimationToggle(key));
+  });
+}
 
-const btn = document.createElement('button');
-btn.id = 'xr-toggle'; btn.title = 'Animation settings'; btn.textContent = '✦';
-btn.addEventListener('click', e => { e.stopPropagation(); drawer.classList.toggle('open'); });
-document.addEventListener('click', e => { if (!panel.contains(e.target)) drawer.classList.remove('open'); });
+/* ═══════════════════════════════════════════
+   DYNAMIC ANIMATION APPLICATION
+   ═══════════════════════════════════════════ */
 
-panel.appendChild(drawer);
-panel.appendChild(btn);
-document.body.appendChild(panel);
+// Store references to active handlers for cleanup
+const animHandlers = {
+  navShrink: null,
+  parallax: null,
+  activeNav: null,
+  cursorTrail: null,
+  ripple: null,
+};
+
+function applyAnimationSetting(key, enabled) {
+  // This function handles enabling/disabling animations without page reload
+  if (key === 'scrollReveal') {
+    const els = document.querySelectorAll('.xr-hidden, .xr-visible');
+    if (enabled) {
+      els.forEach(el => el.classList.remove('xr-visible'));
+      // Re-initialize scroll reveal
+      const allEls = document.querySelectorAll('section,article,.card,.project,h2,h3,p,a');
+      allEls.forEach((el, i) => {
+        if (!el.classList.contains('xr-hidden')) {
+          el.classList.add('xr-hidden');
+          el.style.transitionDelay = `${(i % 5) * 55}ms`;
+        }
+      });
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { e.target.classList.add('xr-visible'); obs.unobserve(e.target); }
+        });
+      }, { threshold: 0.1 });
+      allEls.forEach(el => obs.observe(el));
+    } else {
+      els.forEach(el => {
+        el.classList.remove('xr-hidden', 'xr-visible');
+        el.style.transitionDelay = '';
+      });
+    }
+  } 
+  else if (key === 'logoFloat') {
+    const logo = document.querySelector('img[alt*="ogo"],.logo-container img,header img');
+    if (logo) {
+      if (enabled) {
+        logo.classList.add('xr-logo-float');
+      } else {
+        logo.classList.remove('xr-logo-float');
+      }
+    }
+  }
+  else if (key === 'ripple') {
+    if (enabled) {
+      // Re-add ripple effect
+      document.querySelectorAll('a,button').forEach(btn => {
+        btn.classList.add('xr-ripple-host');
+        if (!btn.dataset.rippleAttached) {
+          btn.dataset.rippleAttached = 'true';
+          btn.addEventListener('click', e => {
+            const r = btn.getBoundingClientRect();
+            const sz = Math.max(r.width, r.height);
+            const rpl = document.createElement('span');
+            rpl.className = 'xr-ripple';
+            rpl.style.cssText = `width:${sz}px;height:${sz}px;left:${e.clientX - r.left}px;top:${e.clientY - r.top}px`;
+            btn.appendChild(rpl);
+            rpl.addEventListener('animationend', () => rpl.remove());
+          });
+        }
+      });
+    } else {
+      // Remove ripple effect
+      document.querySelectorAll('.xr-ripple-host').forEach(btn => {
+        btn.classList.remove('xr-ripple-host');
+        delete btn.dataset.rippleAttached;
+      });
+    }
+  }
+  else if (key === 'navShrink') {
+    const nav = document.querySelector('nav, header');
+    if (nav) {
+      if (enabled) {
+        nav.style.transition = 'padding .3s ease, backdrop-filter .3s ease, box-shadow .3s ease';
+        animHandlers.navShrink = () => {
+          const on = window.scrollY > 60;
+          nav.style.padding        = on ? '.4rem 1.5rem' : '';
+          nav.style.backdropFilter = on ? 'blur(14px)' : '';
+          nav.style.boxShadow      = on ? '0 2px 20px rgba(0,0,0,.2)' : '';
+        };
+        window.addEventListener('scroll', animHandlers.navShrink, { passive: true });
+      } else {
+        if (animHandlers.navShrink) {
+          window.removeEventListener('scroll', animHandlers.navShrink);
+          animHandlers.navShrink = null;
+        }
+        nav.style.padding = '';
+        nav.style.backdropFilter = '';
+        nav.style.boxShadow = '';
+      }
+    }
+  }
+  else if (key === 'cursorTrail') {
+    if (enabled) {
+      const colors = ['#7f77dd','#1d9e75','#d85a30','#d4537e','#378add','#ef9f27'];
+      let ci = 0, last = { x: -999, y: -999 };
+      
+      animHandlers.cursorTrail = e => {
+        const dx = e.clientX - last.x, dy = e.clientY - last.y;
+        if (dx * dx + dy * dy < 400) return;
+        last = { x: e.clientX, y: e.clientY };
+        const c = colors[ci++ % colors.length];
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('viewBox', '-8 -8 16 16');
+        svg.style.cssText = `width:16px;height:16px;left:${e.clientX}px;top:${e.clientY}px;position:fixed;pointer-events:none;z-index:99999`;
+        svg.classList.add('xr-cross');
+        svg.innerHTML = `
+          <line x1="-6" y1="0"  x2="6"  y2="0"  stroke="${c}" stroke-width="2" stroke-linecap="round"/>
+          <line x1="0"  y1="-6" x2="0"  y2="6"  stroke="${c}" stroke-width="2" stroke-linecap="round"/>`;
+        document.body.appendChild(svg);
+        svg.addEventListener('animationend', () => svg.remove());
+      };
+      document.addEventListener('mousemove', animHandlers.cursorTrail);
+    } else {
+      if (animHandlers.cursorTrail) {
+        document.removeEventListener('mousemove', animHandlers.cursorTrail);
+        animHandlers.cursorTrail = null;
+      }
+      // Clean up any remaining crosses
+      document.querySelectorAll('.xr-cross').forEach(el => el.remove());
+    }
+  }
+  else if (key === 'counterAnim') {
+    if (enabled) {
+      [...document.querySelectorAll('*')].filter(el => {
+        if (el.children.length) return false;
+        return /^\d+[+]?$/.test(el.textContent.trim());
+      }).forEach(el => {
+        if (el.dataset.counterAttached) return;
+        el.dataset.counterAttached = 'true';
+        const target = parseInt(el.textContent);
+        if (isNaN(target) || target > 9999) return;
+        const suffix = el.textContent.replace(/\d/g, '').trim();
+        const obs = new IntersectionObserver(entries => {
+          if (!entries[0].isIntersecting) return;
+          obs.disconnect();
+          let cur = 0;
+          const step = Math.max(1, Math.ceil(target / 40));
+          const iv = setInterval(() => {
+            cur = Math.min(cur + step, target);
+            el.textContent = cur + suffix;
+            if (cur >= target) clearInterval(iv);
+          }, 30);
+        }, { threshold: 0.8 });
+        obs.observe(el);
+      });
+    } else {
+      document.querySelectorAll('[data-counter-attached]').forEach(el => {
+        delete el.dataset.counterAttached;
+      });
+    }
+  }
+  // Other animations will apply on next page load
+}
