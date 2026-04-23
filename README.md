@@ -1,4 +1,4 @@
-<h1>Hey everyone, this us our GitHub repositiry</h1>
+<h1>Hey everyone, this us our GitHub repository</h1>
 <p> 
     Here you can fork from this original repositiry and submit changes to help us as part of our community.
     This is mostly a page for people trying to help as part of our team.
