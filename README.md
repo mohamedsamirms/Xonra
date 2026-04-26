@@ -2,9 +2,9 @@
 <head>
 	<style>
 		.spec-txt {
-    			font-size: 0.9rem;
-    			margin-bottom: 5px;
-			}
+    		font-size: 0.9rem;
+    		margin-bottom: 5px;
+		}
 	</style>
 </head>
 
