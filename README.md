@@ -1,3 +1,13 @@
+
+
+
+.spec-txt {
+    		font-size: 0.9rem;
+    		margin-bottom: 5px;
+		}
+
+
+
 <h1>Hey everyone, this is our GitHub repository</h1>
 <p> 
     Here, you can fork from this original repository and submit changes to help us as part of our community.
