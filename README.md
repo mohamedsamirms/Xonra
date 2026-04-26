@@ -1,12 +1,11 @@
+<!DOCTYPE HTML!
 
-
-
-.spec-txt {
-    		font-size: 0.9rem;
-    		margin-bottom: 5px;
-		}
-
-
+<style>
+	.spec-txt {
+    			font-size: 0.9rem;
+    			margin-bottom: 5px;
+			}
+</style>
 
 <h1>Hey everyone, this is our GitHub repository</h1>
 <p> 
