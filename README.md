@@ -16,4 +16,4 @@
     If you want to suggest things we could add to out website or get quick updates on how everything is going,
     you can check our discord, also linked below.
 </p>
-<a href = https://discord.gg/BR9hQTmSU5/ _blank>discord.gg/sH7WCHdYFp</a>
+<a href = https://discord.gg/BR9hQTmSU5/ _blank>discord.gg/XonraBlox</a>
