@@ -1273,6 +1273,9 @@ button:not(:disabled):hover {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
     border: 2px solid transparent;
     background-color: #ffffff;
+    cursor: pointer;
+    z-index: 1;
+    position: relative;
 }
 
 .main-btn:hover {
@@ -1293,6 +1296,8 @@ button:not(:disabled):hover {
     position: relative;
     border: none;
     overflow: hidden;
+    cursor: pointer;
+    z-index: 1;
 }
 
 .play_btn::before {
@@ -1306,6 +1311,8 @@ button:not(:disabled):hover {
     border-radius: 50%;
     transform: translate(-50%, -50%);
     transition: width 0.6s, height 0.6s;
+    pointer-events: none;
+    z-index: -1;
 }
 
 .play_btn:hover::before {
@@ -1330,6 +1337,8 @@ button:not(:disabled):hover {
     position: relative;
     border: none;
     overflow: hidden;
+    cursor: pointer;
+    z-index: 1;
 }
 
 .discord-btn::before {
@@ -1341,6 +1350,8 @@ button:not(:disabled):hover {
     height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
     transition: left 0.5s;
+    pointer-events: none;
+    z-index: -1;
 }
 
 .discord-btn:hover::before {
@@ -1436,6 +1447,7 @@ button:not(:disabled):hover {
     height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
     transition: left 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    pointer-events: none;
     z-index: 1;
 }
 
@@ -1461,6 +1473,7 @@ button:not(:disabled):hover {
     mask-composite: exclude;
     opacity: 0;
     transition: opacity 0.3s ease;
+    pointer-events: none;
 }
 
 .card:hover::after,
@@ -1664,6 +1677,8 @@ a {
     box-shadow: 0 6px 18px rgba(128, 128, 128, 0.2);
     position: relative;
     overflow: hidden;
+    cursor: pointer;
+    z-index: 1;
 }
 
 .ShuttingDown-btn:hover {

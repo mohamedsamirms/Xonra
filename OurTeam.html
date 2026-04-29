@@ -126,18 +126,135 @@
             margin-right: auto;
         }
         
-        /* compact adjustments */
+        /* Tablet and mobile adjustments */
+        @media (max-width: 768px) {
+            .team-grid,
+            .contributors-grid,
+            .spec-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        /* Mobile adjustments */
         @media (max-width: 640px) {
             .team-grid {
                 grid-template-columns: 1fr;
-                gap: 20px;
+                gap: 16px;
             }
             .discord-tag-icon {
                 width: 70px;
                 height: 70px;
             }
+            .team-member {
+                padding: 24px 16px 20px;
+            }
             .team-member h3 {
-                font-size: 1.4rem;
+                font-size: 1.3rem;
+            }
+            .team-member txt {
+                font-size: 0.85rem;
+            }
+            .member-badge {
+                font-size: 0.85rem;
+                padding: 8px 14px;
+            }
+            
+            .contributors-grid,
+            .spec-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .contributor-card,
+            .spec-card {
+                padding: 20px;
+            }
+            .contributor-avatar,
+            .spec-avatar {
+                width: 80px;
+                height: 80px;
+            }
+            .contributor-name,
+            .spec-name {
+                font-size: 1.2rem;
+            }
+            .contributor-bio,
+            .spec-bio {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Small phone adjustments */
+        @media (max-width: 480px) {
+            .team-member {
+                padding: 20px 12px 16px;
+            }
+            .team-member h3 {
+                font-size: 1.1rem;
+            }
+            .discord-tag-icon {
+                width: 60px;
+                height: 60px;
+                margin-bottom: 16px;
+            }
+            .member-badge {
+                font-size: 0.75rem;
+                padding: 6px 12px;
+                gap: 4px;
+            }
+            
+            .contributor-card,
+            .spec-card {
+                padding: 16px 12px;
+            }
+            .contributor-name,
+            .spec-name {
+                font-size: 1rem;
+            }
+            .contributor-avatar,
+            .spec-avatar {
+                width: 70px;
+                height: 70px;
+                margin-bottom: 14px;
+            }
+            .contributor-handle,
+            .spec-handle {
+                font-size: 0.85rem;
+            }
+            .contributor-link {
+                font-size: 0.85rem;
+                padding: 8px 12px;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .team-intro,
+            .contributors-intro,
+            .spec-intro {
+                padding: 0 16px;
+            }
+            
+            .team-intro p,
+            .contributors-intro,
+            .spec-intro {
+                font-size: 1rem;
+            }
+            
+            .github-contributors-title,
+            .spec-title {
+                font-size: 1.5rem;
+                gap: 8px;
+            }
+            
+            .github-contributors-title i,
+            .spec-title i,
+            .spec-title img {
+                font-size: 1.4rem !important;
+                width: 28px !important;
+                height: 28px !important;
             }
         }
 
@@ -386,7 +503,8 @@
             margin-top: 4px;
         }
 
-        team-work-btn {
+        .team-work-btn {
+            display: inline-block;
             background: var(--accent);
             color: white;
             padding: 10px 16px;
@@ -401,6 +519,51 @@
             background: var(--accent-strong);
             transform: translateY(-2px);
             box-shadow: 0 8px 16px rgba(58, 108, 244, 0.3);
+        }
+        
+        /* CTA boxes responsive */
+        .cta-box {
+            margin: 40px auto;
+            text-align: center;
+            padding: 24px 20px;
+            background: var(--surface-bg);
+            border-radius: 48px;
+            border: 1px solid var(--header-border);
+            max-width: 600px;
+        }
+        
+        .cta-box p {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+        }
+        
+        @media (max-width: 768px) {
+            .cta-box {
+                margin: 32px 16px;
+                padding: 20px 16px;
+                border-radius: 32px;
+            }
+            .cta-box p {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .cta-box {
+                margin: 24px 12px;
+                padding: 16px 14px;
+                border-radius: 24px;
+            }
+            .cta-box p {
+                font-size: 0.95rem;
+            }
+            .discord-btn,
+            .team-work-btn {
+                width: 100%;
+                padding: 12px 16px;
+                font-size: 0.85rem;
+            }
         }
     </style>
 </head>
@@ -448,8 +611,8 @@
     </header>
 
     <!-- Main team section -->
-    <section style="padding-top: 140px; padding-bottom: 100px;">
-        <div class="settings-container" style="max-width: 1300px;">
+    <section style="padding-top: 80px; padding-bottom: 80px;">
+        <div class="settings-container" style="max-width: 1300px; padding: 0 16px;">
             <div class="team-intro">
                 <div class="section-header">
                     <h2 class="title" style="margin-bottom: 12px;">
@@ -732,23 +895,23 @@
 
             
             <!-- Additional note / call to action -->
-            <div style="margin-top: 64px; text-align: center; padding: 24px; background: var(--surface-bg); border-radius: 48px; border: 1px solid var(--header-border);">
-                <p style="color: var(--text-primary); font-size: 1.1rem; margin-bottom: 12px;">
+            <div class="cta-box">
+                <p>
                     <i class="fas fa-comments" style="color: var(--accent); margin-right: 8px;"></i>
                     Want to connect with the team? 
                 </p>
-                <a href="https://discord.gg/BR9hQTmSU5" target="_blank" rel="noopener noreferrer" class="discord-btn" style="display: inline-block; margin-top: 8px;">
+                <a href="https://discord.gg/BR9hQTmSU5" target="_blank" rel="noopener noreferrer" class="discord-btn">
                     <i class="fab fa-discord" style="margin-right: 8px;"></i>Join our Discord
                 </a>
             </div>
 
 
-            <div style="margin-top: 64px; text-align: center; padding: 24px; background: var(--surface-bg); border-radius: 48px; border: 1px solid var(--header-border);">
-                <p style="color: var(--text-primary); font-size: 1.1rem; margin-bottom: 12px;">
+            <div class="cta-box">
+                <p>
                     <i class="fas fa-comments" style="color: var(--accent); margin-right: 8px;"></i>
                     Want to see what the team's work?
                 </p>
-                <a href="team's-work.html" target="" rel="noopener noreferrer" class="team-work-btn" style="display: inline-block; margin-top: 8px;">
+                <a href="team's-work.html" target="" rel="noopener noreferrer" class="team-work-btn">
                     <i class="fas fa-eye" style="margin-right: 8px;"></i>view team's work
                 </a>
             </div>
