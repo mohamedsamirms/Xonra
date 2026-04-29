@@ -1226,3 +1226,560 @@ section {
     font-size: 50px;
     font-weight: 500;
 }
+
+.warning-message:hover {
+    background: color-mix(in srgb, var(--surface-bg) 90%, #ff0026 10%);
+    box-shadow: 0 20px 40px rgba(255, 0, 38, 0.3);
+    transform: translateY(-4px);
+}
+
+/* ===== ENHANCED HOVER ANIMATIONS ===== */
+
+/* Button hover effects */
+button {
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    overflow: hidden;
+}
+
+button:not(:disabled):hover {
+    cursor: pointer;
+}
+
+/* Button ripple effect animation */
+@keyframes button-ripple {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+@keyframes button-glow {
+    0%, 100% {
+        box-shadow: 0 8px 20px rgba(58, 108, 244, 0.2), inset 0 0 0 0 rgba(255, 255, 255, 0.1);
+    }
+    50% {
+        box-shadow: 0 14px 30px rgba(58, 108, 244, 0.4), inset 0 0 0 4px rgba(255, 255, 255, 0.2);
+    }
+}
+
+/* Main button hover animation */
+.main-btn {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    border: 2px solid transparent;
+    background-color: #ffffff;
+}
+
+.main-btn:hover {
+    transform: scale(1.12) translateY(-4px);
+    box-shadow: 0 20px 40px rgba(35, 79, 204, 0.3), inset 0 0 0 2px rgba(255, 255, 255, 0.4);
+    background-color: #f0f4ff;
+}
+
+.main-btn:active {
+    transform: scale(1.04) translateY(-1px);
+    box-shadow: 0 10px 20px rgba(35, 79, 204, 0.2);
+}
+
+/* Play button enhanced hover */
+.play_btn {
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 6px 18px rgba(58, 108, 244, 0.25);
+    position: relative;
+    border: none;
+    overflow: hidden;
+}
+
+.play_btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.play_btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.play_btn:hover {
+    background: var(--accent-strong);
+    transform: translateY(-5px) scale(1.08);
+    box-shadow: 0 14px 32px rgba(58, 108, 244, 0.5), 0 0 20px rgba(58, 108, 244, 0.3);
+}
+
+.play_btn:active {
+    transform: translateY(-2px) scale(1.02);
+}
+
+/* Discord button enhanced hover */
+.discord-btn {
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 6px 18px rgba(88, 101, 242, 0.2);
+    position: relative;
+    border: none;
+    overflow: hidden;
+}
+
+.discord-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.discord-btn:hover::before {
+    left: 100%;
+}
+
+.discord-btn:hover {
+    background-color: #4752c4;
+    transform: scale(1.12) translateY(-4px);
+    box-shadow: 0 14px 36px rgba(88, 101, 242, 0.45), inset 0 0 20px rgba(255, 255, 255, 0.15);
+}
+
+.discord-btn:active {
+    transform: scale(1.03) translateY(-1px);
+}
+
+/* Navigation link hover animations */
+.nav-link,
+.our-team-link,
+.News-link {
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.nav-link::before,
+.our-team-link::before,
+.News-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent-strong);
+    transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    border-radius: 2px;
+}
+
+.nav-link:hover::before,
+.our-team-link:hover::before,
+.News-link:hover::before {
+    width: 100%;
+}
+
+.nav-link:hover,
+.our-team-link:hover,
+.News-link:hover {
+    color: var(--accent-strong);
+    transform: translateY(-2px);
+}
+
+/* Dropdown button hover rotation */
+.home-dropdown-btn {
+    transition: all 0.3s ease;
+}
+
+.home-dropdown-btn:hover {
+    transform: scale(1.1);
+}
+
+.home-dropdown-btn i {
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Settings gear hover animation */
+.settings-gear {
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.settings-gear:hover {
+    transform: rotate(45deg) scale(1.1);
+    filter: drop-shadow(0 4px 12px rgba(58, 108, 244, 0.2));
+}
+
+/* Card hover animations */
+.card,
+.project_card {
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: var(--card-shadow);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Card shine effect */
+.card::before,
+.project_card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    transition: left 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 1;
+}
+
+.card:hover::before,
+.project_card:hover::before {
+    left: 100%;
+}
+
+/* Card glow border animation */
+.card::after,
+.project_card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 16px;
+    padding: 1px;
+    background: linear-gradient(135deg, transparent, rgba(58, 108, 244, 0.5), transparent);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card:hover::after,
+.project_card:hover::after {
+    opacity: 1;
+}
+
+.card:hover,
+.project_card:hover {
+    transform: translateY(-16px) scale(1.02);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2), 0 0 30px rgba(58, 108, 244, 0.15);
+    border-color: rgba(58, 108, 244, 0.3);
+}
+
+.card:hover h3,
+.project_card:hover h3 {
+    color: var(--accent-strong);
+    transition: color 0.3s ease;
+}
+
+/* Art card hover with image zoom */
+.art-card {
+    transition: all 0.3s ease;
+    box-shadow: var(--card-shadow);
+}
+
+.art-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+}
+
+.teams_art {
+    transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.art-card:hover .teams_art {
+    transform: scale(1.08);
+}
+
+/* Profile picture hover effect */
+.pfp {
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.pfp:hover {
+    transform: scale(1.08) rotate(2deg);
+    filter: drop-shadow(0 8px 20px rgba(58, 108, 244, 0.25));
+}
+
+/* Link hover underline animation */
+a {
+    transition: color 0.3s ease;
+}
+
+.back-link {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.back-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent-strong);
+    transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.back-link:hover::after {
+    width: 100%;
+}
+
+.back-link:hover {
+    color: var(--accent-strong);
+    transform: translateX(4px);
+}
+
+/* Dropdown content animation enhancement */
+.dropdown-content a {
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.dropdown-content a::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 3px;
+    height: 0;
+    background: var(--accent);
+    border-radius: 2px;
+    transform: translateY(-50%);
+    transition: height 0.3s ease;
+}
+
+.dropdown-content a:hover::before {
+    height: 20px;
+}
+
+.dropdown-content a:hover {
+    transform: translateX(6px);
+}
+
+/* Theme toggle hover effect */
+.theme-toggle {
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 4px 12px rgba(58, 108, 244, 0.12);
+}
+
+.theme-toggle:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(58, 108, 244, 0.25);
+}
+
+.theme-toggle:active {
+    transform: translateY(-1px);
+}
+
+/* Select dropdown hover */
+.setting-item select {
+    transition: all 0.2s ease;
+}
+
+.setting-item select:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 12px rgba(58, 108, 244, 0.15);
+}
+
+.setting-item select:focus {
+    box-shadow: 0 0 16px rgba(58, 108, 244, 0.25);
+}
+
+/* Nav toggle button hover */
+.nav-toggle {
+    transition: all 0.3s ease;
+}
+
+.nav-toggle:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 16px rgba(58, 108, 244, 0.2);
+}
+
+.nav-toggle:active {
+    transform: scale(0.96);
+}
+
+/* Team work stat cards hover */
+.team-work-stat {
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+}
+
+.team-work-stat:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(58, 108, 244, 0.2);
+}
+
+/* Preview card hover animation */
+.preview-card {
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.1));
+}
+
+.preview-card:hover {
+    filter: drop-shadow(0 14px 28px rgba(58, 108, 244, 0.25));
+}
+
+.preview-card-front:hover {
+    transform: rotate(10deg) translateY(-4px);
+}
+
+.preview-card-back:hover {
+    transform: rotate(-10deg) translateY(4px);
+}
+
+/* Logo hover effect */
+.logo-link {
+    transition: all 0.3s ease;
+}
+
+.logo-link:hover img {
+    transform: scale(1.08) rotate(-3deg);
+    filter: drop-shadow(0 6px 16px rgba(58, 108, 244, 0.2));
+}
+
+/* Smooth hover state transitions */
+@media (prefers-reduced-motion: no-preference) {
+    * {
+        scroll-behavior: smooth;
+    }
+}
+
+/* ===== ADDITIONAL BUTTON & CARD ENHANCEMENTS ===== */
+
+/* ShuttingDown button hover */
+.ShuttingDown-btn {
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 6px 18px rgba(128, 128, 128, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.ShuttingDown-btn:hover {
+    transform: scale(1.08) translateY(-4px);
+    box-shadow: 0 12px 32px rgba(128, 128, 128, 0.35);
+}
+
+.ShuttingDown-btn:active {
+    transform: scale(1.02) translateY(-1px);
+}
+
+/* Button text glow on hover */
+.play_btn:hover,
+.discord-btn:hover,
+.main-btn:hover {
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+/* Card content animations on hover */
+.card h3,
+.project_card h3,
+.project_name {
+    transition: all 0.3s ease;
+}
+
+.card:hover h3,
+.project_card:hover h3 {
+    letter-spacing: 0.5px;
+}
+
+.project_card:hover .project_name {
+    color: var(--accent-strong);
+    transform: translateX(4px);
+}
+
+.project_card:hover .project_description {
+    color: var(--text-primary);
+}
+
+/* Card button hover within cards */
+.card .play_btn,
+.project_card .play_btn {
+    transition: all 0.3s ease;
+}
+
+.card:hover .play_btn,
+.project_card:hover .play_btn {
+    transform: translateY(-2px) scale(1.05);
+}
+
+/* Enhanced link buttons in cards */
+.card a,
+.project_card a {
+    transition: all 0.3s ease;
+}
+
+.card a:hover,
+.project_card a:hover {
+    transform: translateY(-2px);
+}
+
+/* Keyframe animations for continuous effects */
+@keyframes gentle-float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
+@keyframes subtle-glow {
+    0%, 100% {
+        text-shadow: 0 0 4px transparent;
+    }
+    50% {
+        text-shadow: 0 0 12px rgba(58, 108, 244, 0.4);
+    }
+}
+
+/* Interactive hover states for focus */
+button:focus-visible,
+a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.play_btn:focus-visible,
+.discord-btn:focus-visible,
+.main-btn:focus-visible {
+    outline: 3px solid var(--accent-strong);
+    outline-offset: 4px;
+}
+
+/* Card focus animation */
+.card:focus-within,
+.project_card:focus-within {
+    box-shadow: 0 0 0 3px var(--accent), var(--card-shadow);
+}
+
+/* Smooth color transitions for all interactive elements */
+a {
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Enhanced button scale on active */
+button:active {
+    transition: transform 0.1s ease;
+}
+
+/* Mobile-friendly hover prevention */
+@media (hover: none) and (pointer: coarse) {
+    .card:hover,
+    .project_card:hover,
+    button:hover,
+    a:hover {
+        transform: none !important;
+    }
+}
