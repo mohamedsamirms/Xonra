@@ -386,6 +386,22 @@
             margin-top: 4px;
         }
 
+        team-work-btn {
+            background: var(--accent);
+            color: white;
+            padding: 10px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .team-work-btn:hover {
+            background: var(--accent-strong);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(58, 108, 244, 0.3);
+        }
     </style>
 </head>
 <body>
@@ -725,8 +741,20 @@
                     <i class="fab fa-discord" style="margin-right: 8px;"></i>Join our Discord
                 </a>
             </div>
+
+
+            <div style="margin-top: 64px; text-align: center; padding: 24px; background: var(--surface-bg); border-radius: 48px; border: 1px solid var(--header-border);">
+                <p style="color: var(--text-primary); font-size: 1.1rem; margin-bottom: 12px;">
+                    <i class="fas fa-comments" style="color: var(--accent); margin-right: 8px;"></i>
+                    Want to see what the team's work?
+                </p>
+                <a href="team's-work.html" target="" rel="noopener noreferrer" class="team-work-btn" style="display: inline-block; margin-top: 8px;">
+                    <i class="fas fa-eye" style="margin-right: 8px;"></i>view team's work
+                </a>
+            </div>
         </div>
     </section>
+    
 
     <footer style="text-align: center; padding: 40px 20px; color: var(--text-secondary); font-size: 0.9rem; border-top: 1px solid var(--header-border);">
         <p>&copy; 2026 Xonra, all rights reserved</p>

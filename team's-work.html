@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xonra - Team Work</title>
+    <link rel="icon" href="images/Xonra-logo.png" sizes="any">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="animations.js" defer></script>
+    <script src="scripts.js" defer></script>
+</head>
+<body class="team-work-page">
+    <header>
+        <a href="index.html" class="logo-container logo-link" aria-label="Xonra home">
+            <img src="images/Xonra-logo.png" alt="Xonra Logo">
+            <span class="Xonra_topleft">Xonra</span>
+        </a>
+
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Open navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <div class="header-actions" id="site-menu">
+            <nav class="navigation" aria-label="Primary">
+                <a href="index.html" class="nav-link">Home</a>
+                <div class="dropdown">
+                    <button class="home-dropdown-btn" type="button" aria-haspopup="true" aria-expanded="false">
+                         <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="index.html#about">About</a>
+                        <a href="index.html#projects">Projects</a>
+                        <a href="index.html#help">Help</a>
+                        <a href="index.html#githubrepo">Github Repository</a>
+                        <!-- oh my god you guys make this so sufferable. -->
+                    </div>
+                </div>
+                <a href="OurTeam.html" class="nav-link our-team-link">
+                Our Team
+                </a>
+
+                <a href="news.html" class="nav-link News-link">News</a>
+
+
+                <a href="settings.html" class="nav-link settings-gear" aria-label="Settings">
+                <i class="fas fa-cog"></i>
+                    <span class="settings-label">Settings</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="team-work-shell">
+        <section class="team-work-hero">
+            <div class="team-work-hero-copy">
+                <p class="team-work-eyebrow">Creative showcase</p>
+                <h1 class="team-work-title">Teams' Work</h1>
+                <p class="team-work-intro">
+                    A curated look at the artists shaping Xonra's personality through illustrations, visual experiments,
+                    and in-progress concepts.
+                </p>
+                <div class="team-work-stats" aria-label="Showcase stats">
+                    <div class="team-work-stat">
+                        <strong>1</strong>
+                        <span>featured artist</span>
+                    </div>
+                    <div class="team-work-stat">
+                        <strong>2</strong>
+                        <span>spotlight pieces</span>
+                    </div>
+                    <div class="team-work-stat">
+                        <strong>2026</strong>
+                        <span>current gallery drop</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="team-work-preview" aria-hidden="true">
+                <figure class="preview-card preview-card-back">
+                    <img src="images/teams'-work/krit's art2.png" alt="">
+                </figure>
+                <figure class="preview-card preview-card-front">
+                    <img src="images/teams'-work/krit's art.jpg" alt="">
+                </figure>
+            </div>
+        </section>
+
+        <section class="team-gallery" aria-labelledby="krit-gallery-title">
+            <div class="team-gallery-header">
+                <div>
+                    <p class="team-gallery-label">Artist spotlight</p>
+                    <h2 id="krit-gallery-title">kritalasy</h2>
+                </div>
+                <p class="team-gallery-description">
+                    Atmospheric artwork with bold color, expressive framing, and a strong sense of motion.
+                </p>
+            </div>
+
+            <article class="creator-card">
+                <div class="creator-summary">
+                    <img class="pfp" src="images/team pfp/kritalasy.webp" alt="Portrait of kritalasy">
+                    <div class="creator-copy">
+                        <p class="creator-role">Illustration and concept art</p>
+                        <h3>Visual storytelling for the Xonra world</h3>
+                        <p>
+                            This gallery highlights recent pieces from kritalasy, featuring dramatic lighting, stylized
+                            characters, and composition choices that give the project a more distinct visual identity.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="art-grid">
+                    <figure class="art-card art-card-featured">
+                        <img class="teams_art" src="images/teams'-work/krit's art.jpg" alt="Featured artwork by kritalasy">
+                        <figcaption>
+                            <span>Featured illustration</span>
+                            <span>High-energy character focus</span>
+                        </figcaption>
+                    </figure>
+
+                    <figure class="art-card">
+                        <img class="teams_art" src="images/teams'-work/krit's art2.png" alt="Second featured artwork by kritalasy">
+                        <figcaption>
+                            <span>Color study</span>
+                            <span>Painterly atmosphere and contrast</span>
+                        </figcaption>
+                    </figure>
+                </div>
+            </article>
+        </section>
+
+        <section>
+            <div class="warning-message" role="alert">
+                <h1 class="warning-text">THIS CONTENT ISN'T OWNED BY XONRA AND HAVE NOTHING TO DO WITH US, ITS JUST SHOWING ARTWORK FROM A THIRD PARTY</h1>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Xonra, all rights reserved</p>
+    </footer>
+</body>
+</html>
