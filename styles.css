@@ -1810,7 +1810,7 @@ button:active {
 
 /* Hide the images by default */
 .mySlides {
-  display: none;
+  display: 1;
 }
 
 /* Next & previous buttons */
