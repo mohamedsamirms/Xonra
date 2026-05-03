@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="styles.css">
 
     <link rel="icon" href="images/Xonra-logo.png" sizes="any">
-    <link rel="icon" href=images/team pfp/developerspfp.png" sizes="any">
+    <link rel="icon" href="images/team pfp/developerspfp.png" sizes="any">
     <link rel="icon" href="images/team pfp/ownerspfp.jpeg" sizes="any">
     
     
@@ -29,6 +29,17 @@
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 28px;
             margin-top: 24px;
+        }
+
+        .team-page-section {
+            padding-top: 80px;
+            padding-bottom: 80px;
+        }
+
+        .team-shell {
+            width: min(100%, 1300px);
+            margin: 0 auto;
+            padding: 0 16px;
         }
         
         .team-member {
@@ -42,6 +53,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-width: 0;
         }
         
         .team-member:hover {
@@ -86,10 +98,15 @@
             font-size: 0.95rem;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
             gap: 8px;
             border: 1px solid var(--header-border);
             margin-top: 6px;
             transition: background 0.2s;
+            max-width: 100%;
+            text-align: center;
+            overflow-wrap: anywhere;
         }
         
         .member-badge i {
@@ -138,6 +155,15 @@
 
         /* Mobile adjustments */
         @media (max-width: 640px) {
+            .team-page-section {
+                padding-top: 64px;
+                padding-bottom: 64px;
+            }
+
+            .team-shell {
+                padding: 0 12px;
+            }
+
             .team-grid {
                 grid-template-columns: 1fr;
                 gap: 16px;
@@ -186,6 +212,10 @@
 
         /* Small phone adjustments */
         @media (max-width: 480px) {
+            .team-shell {
+                padding: 0 10px;
+            }
+
             .team-member {
                 padding: 20px 12px 16px;
             }
@@ -267,6 +297,8 @@
         .github-contributors-section {
             margin-top: 80px;
             padding-top: 60px;
+            padding-left: 0;
+            padding-right: 0;
             border-top: 2px solid var(--header-border);
         }
 
@@ -314,6 +346,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-width: 0;
         }
 
         .contributor-card:hover {
@@ -337,17 +370,21 @@
             font-weight: 700;
             color: var(--text-primary);
             margin-bottom: 8px;
+            max-width: 100%;
+            overflow-wrap: anywhere;
         }
 
         .contributor-handle {
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-wrap: wrap;
             gap: 6px;
             color: var(--accent);
             font-size: 0.95rem;
             margin-bottom: 12px;
-            word-break: break-word;
+            max-width: 100%;
+            overflow-wrap: anywhere;
         }
 
         .contributor-handle i {
@@ -397,6 +434,8 @@
         .spec-section {
             margin-top: 80px;
             padding-top: 60px;
+            padding-left: 0;
+            padding-right: 0;
             border-top: 2px solid var(--header-border);
         }
 
@@ -444,6 +483,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-width: 0;
         }
 
         .spec-card:hover {
@@ -467,22 +507,27 @@
             font-weight: 700;
             color: var(--text-primary);
             margin-bottom: 8px;
+            max-width: 100%;
+            overflow-wrap: anywhere;
         }
 		
 		.spec-txt {
     		font-size: 0.9rem;
     		margin-bottom: 5px;
+            overflow-wrap: anywhere;
 		}
 		
         .spec-handle {
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-wrap: wrap;
             gap: 6px;
             color: var(--accent);
             font-size: 0.95rem;
             margin-bottom: 12px;
-            word-break: break-word;
+            max-width: 100%;
+            overflow-wrap: anywhere;
         }
 
         .spec-handle i {
@@ -547,6 +592,12 @@
             .cta-box p {
                 font-size: 1rem;
             }
+
+            .github-contributors-section,
+            .spec-section {
+                margin-top: 56px;
+                padding-top: 40px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -558,6 +609,13 @@
             .cta-box p {
                 font-size: 0.95rem;
             }
+
+            .github-contributors-section,
+            .spec-section {
+                margin-top: 48px;
+                padding-top: 32px;
+            }
+
             .discord-btn,
             .team-work-btn {
                 width: 100%;
@@ -611,8 +669,8 @@
     </header>
 
     <!-- Main team section -->
-    <section style="padding-top: 80px; padding-bottom: 80px;">
-        <div class="settings-container" style="max-width: 1300px; padding: 0 16px;">
+    <section class="team-page-section">
+        <div class="settings-container team-shell">
             <div class="team-intro">
                 <div class="section-header">
                     <h2 class="title" style="margin-bottom: 12px;">

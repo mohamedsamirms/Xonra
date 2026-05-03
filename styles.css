@@ -452,6 +452,7 @@ section {
     max-width: 640px;
 }
 
+
 .main h2 {
     font-size: clamp(2rem, 5vw, 3.6rem);
     line-height: 1.1;
@@ -713,6 +714,10 @@ section {
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 900px) {
+    body {
+        padding-top: 112px;
+    }
+
     header {
         padding: 16px;
         gap: 16px;
@@ -822,6 +827,10 @@ section {
 }
 
 @media (max-width: 640px) {
+    body {
+        padding-top: 104px;
+    }
+
     section {
         padding: 64px 16px;
     }
@@ -865,6 +874,10 @@ section {
 }
 
 @media (max-width: 420px) {
+    body {
+        padding-top: 96px;
+    }
+
     .logo-container {
         justify-content: center;
     }
@@ -1885,4 +1898,29 @@ button:active {
 @keyframes fade {
   from {opacity: .4}
   to {opacity: 1}
+}
+
+.rating-btn {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 6px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.rating-btn:hover {
+    background-color: #317034;
+}
+
+.rating-btn:visited {
+    background-color: #2196F3;
+}
+.rating-btn:visited:hover {
+    background-color: #065291;
 }

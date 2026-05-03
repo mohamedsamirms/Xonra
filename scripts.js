@@ -310,7 +310,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 let slideIndex = 1;
-showSlides(slideIndex);
+if (document.getElementsByClassName("mySlides").length && document.getElementsByClassName("dot").length) {
+  showSlides(slideIndex);
+}
 
 // Next/previous controls
 function plusSlides(n) {
@@ -326,6 +328,9 @@ function showSlides(n) {
   let i;
   let slides = document.getElementsByClassName("mySlides");
   let dots = document.getElementsByClassName("dot");
+  if (!slides.length || !dots.length) {
+    return;
+  }
   if (n > slides.length) {slideIndex = 1}
   if (n < 1) {slideIndex = slides.length}
   for (i = 0; i < slides.length; i++) {

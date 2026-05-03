@@ -31,6 +31,38 @@ function saveSetting(key, value) {
 }
 
 const S = loadSettings();
+const pageFlags = document.body.dataset;
+
+function getScrollRevealTargets() {
+  return document.querySelectorAll([
+    '.hero-content',
+    '.team-intro',
+    '.contributors-intro',
+    '.spec-intro',
+    '.cta-box',
+    '.settings-card',
+    '.setting-item',
+    '.card',
+    '.project_card',
+    '.project',
+    '.team-member',
+    '.contributor-card',
+    '.spec-card',
+    '.team-work-hero',
+    '.team-work-preview',
+    '.team-work-stat',
+    '.team-gallery-header',
+    '.art-card',
+    '.art-card-featured',
+    '.title',
+    '.github-contributors-title',
+    '.spec-title',
+    '.github-text',
+    '.main h2',
+    '.main h3',
+    '.main-btn'
+  ].join(','));
+}
 
 /* ─── GLOBAL STYLES ─── */
 const gs = document.createElement('style');
@@ -74,8 +106,8 @@ if (S.navShrink) {
 }
 
 /* ─── 2. SCROLL REVEAL ─── */
-if (S.scrollReveal) {
-  const els = document.querySelectorAll('section,article,.card,.project,h2,h3,p,a');
+if (S.scrollReveal && pageFlags.disableScrollReveal !== 'true') {
+  const els = getScrollRevealTargets();
   els.forEach((el, i) => {
     el.classList.add('xr-hidden');
     el.style.transitionDelay = `${(i % 5) * 55}ms`;
@@ -89,10 +121,10 @@ if (S.scrollReveal) {
 }
 
 /* ─── 3. TYPEWRITER — fixed, no body flicker, cursor as sibling span ─── */
-if (S.typewriter) {
+if (S.typewriter && pageFlags.disableTypewriter !== 'true') {
   /* Find the first h3 inside the first section (hero subtitle) */
   const subtitle = (
-    document.querySelector('section h3') ||
+    document.querySelector('.main h3') ||
     document.querySelector('.hero h3') ||
     document.querySelector('h2 ~ h3') ||
     document.querySelector('h1 ~ p')
@@ -155,8 +187,8 @@ if (S.logoFloat) {
 }
 
 /* ─── 6. PARALLAX ─── */
-if (S.parallax) {
-  const hero = document.querySelector('section:first-of-type,.hero');
+if (S.parallax && pageFlags.disableParallax !== 'true') {
+  const hero = document.querySelector('.main,.hero');
   if (hero) {
     window.addEventListener('scroll', () => {
       hero.style.backgroundPositionY = `${window.scrollY * 0.3}px`;
@@ -302,7 +334,7 @@ function applyAnimationSetting(key, enabled) {
     if (enabled) {
       els.forEach(el => el.classList.remove('xr-visible'));
       // Re-initialize scroll reveal
-      const allEls = document.querySelectorAll('section,article,.card,.project,h2,h3,p,a');
+      const allEls = getScrollRevealTargets();
       allEls.forEach((el, i) => {
         if (!el.classList.contains('xr-hidden')) {
           el.classList.add('xr-hidden');
