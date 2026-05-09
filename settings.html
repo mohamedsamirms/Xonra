@@ -54,7 +54,22 @@
                     <i class="fas fa-cog" style="margin-right: 10px;"></i>Settings
                 </h2>
                 
-                <div class="settings-group">
+                <div class="settings-tabs" style="display: flex; gap: 8px; margin-bottom: 24px; border-bottom: 2px solid var(--header-border); flex-wrap: wrap;">
+                    <button class="settings-tab-btn active" data-tab="theme" style="padding: 12px 20px; background: none; border: none; cursor: pointer; font-weight: 600; color: var(--accent); border-bottom: 3px solid var(--accent); position: relative; bottom: -2px; transition: all 0.3s ease;">
+                        <i class="fas fa-palette" style="margin-right: 6px;"></i>Theme
+                    </button>
+                    <button class="settings-tab-btn" data-tab="layout" style="padding: 12px 20px; background: none; border: none; cursor: pointer; font-weight: 600; color: var(--text-secondary); border-bottom: 3px solid transparent; position: relative; bottom: -2px; transition: all 0.3s ease;">
+                        <i class="fas fa-columns" style="margin-right: 6px;"></i>Layout
+                    </button>
+                    <button class="settings-tab-btn" data-tab="animations" style="padding: 12px 20px; background: none; border: none; cursor: pointer; font-weight: 600; color: var(--text-secondary); border-bottom: 3px solid transparent; position: relative; bottom: -2px; transition: all 0.3s ease;">
+                        <i class="fas fa-film" style="margin-right: 6px;"></i>Animations
+                    </button>
+                    <button class="settings-tab-btn" data-tab="customization" style="padding: 12px 20px; background: none; border: none; cursor: pointer; font-weight: 600; color: var(--text-secondary); border-bottom: 3px solid transparent; position: relative; bottom: -2px; transition: all 0.3s ease;">
+                        <i class="fas fa-sliders-h" style="margin-right: 6px;"></i>Customization
+                    </button>
+                </div>
+                
+                <div class="settings-group" id="theme-tab" data-section="theme" style="display: block;">
                     <h3><i class="fas fa-palette" style="margin-right: 8px;"></i>Theme Gallery</h3>
                     <div class="theme-gallery" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px;">
                         <button class="theme-preset" data-theme="light" style="padding: 16px; border: 2px solid var(--header-border); border-radius: 12px; background: linear-gradient(135deg, #f6f8fc, #ffffff); cursor: pointer;">
@@ -117,7 +132,7 @@
                     </p>
                 </div>
                 
-                <div class="settings-group">
+                <div class="settings-group" id="layout-tab" data-section="layout" style="display: none;">
                     <h3><i class="fas fa-columns" style="margin-right: 8px;"></i>Layout Options</h3>
                     <div class="setting-item">
                         <label for="layoutSelect">Layout Density</label>
@@ -148,7 +163,7 @@
                     </p>
                 </div>
 
-                <div class="settings-group">
+                <div class="settings-group" id="animations-tab" data-section="animations" style="display: none;">
                     <h3><i class="fas fa-film" style="margin-right: 8px;"></i>Animations</h3>
                     <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 16px;">
                         Customize page animations and visual effects. Changes apply instantly.
@@ -158,7 +173,7 @@
                     </div>
                 </div>
                 
-                <div class="settings-group">
+                <div class="settings-group" id="customization-tab" data-section="customization" style="display: none;">
                     <h3><i class="fas fa-sliders-h" style="margin-right: 8px;"></i>Customization</h3>
                     <div class="setting-item">
                         <label for="cardWidth">Card Width (px)</label>
@@ -174,14 +189,18 @@
                         <i class="fas fa-undo"></i> Reset to Defaults
                     </button>
                 </div>
+            </div>
+        </div>
+    </section>
 
-                <div class="settings-group">
-                    <h3>About</h3>
-                    <p style="color: var(--text-secondary);">Xonra · version 2.3.5</p>
-                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 8px;">
-                        Enhanced with multiple themes and layout customization options.
-                    </p>
-                </div>
+    <section style="padding: 40px 20px; background: var(--bg-secondary); border-top: 1px solid var(--header-border);">
+        <div style="max-width: 900px; margin: 0 auto;">
+            <div class="settings-group">
+                <h3>About</h3>
+                <p style="color: var(--text-secondary);">Xonra · version 2.3.5</p>
+                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 8px;">
+                    Enhanced with multiple themes and layout customization options.
+                </p>
             </div>
         </div>
     </section>
@@ -190,5 +209,31 @@
         <a class="rating-btn" target="" rel="noopener noreferrer" href="rating.html"> Rate and give suggestions here </a>
         <p>&copy; 2026 Xonra, all rights reserved</p>
     </footer>
+
+    <script>
+        document.querySelectorAll('.settings-tab-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const tab = this.getAttribute('data-tab');
+                
+                // Hide all sections
+                document.querySelectorAll('[data-section]').forEach(section => {
+                    section.style.display = 'none';
+                });
+                
+                // Remove active state from all buttons
+                document.querySelectorAll('.settings-tab-btn').forEach(btn => {
+                    btn.style.color = 'var(--text-secondary)';
+                    btn.style.borderBottomColor = 'transparent';
+                });
+                
+                // Show selected section
+                document.getElementById(tab + '-tab').style.display = 'block';
+                
+                // Add active state to clicked button
+                this.style.color = 'var(--accent)';
+                this.style.borderBottomColor = 'var(--accent)';
+            });
+        });
+    </script>
 </body>
 </html>

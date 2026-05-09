@@ -20,6 +20,7 @@ const DEFAULTS = {
   counterAnim:   true,
   idleDetection: true,
   idleTimeout:   180000, // 3 minutes in milliseconds
+  memoryMonitor: true,
 };
 
 function loadSettings() {
@@ -90,30 +91,8 @@ gs.textContent = `
   .xr-sw input:checked+.xr-sl::before{transform:translateX(15px)}
   #xr-reload-note{font-size:11px;color:var(--text-secondary);margin-top:8px;padding-top:8px;border-top:1px solid var(--header-border);text-align:center}
   #xr-settings-panel .xr-row{background:var(--page-bg);border:1px solid var(--header-border);margin-bottom:4px}
-  #xr-idle-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:99998;opacity:0;transition:opacity .4s ease}
-  #xr-idle-overlay.xr-idle-show{display:flex;opacity:1}
-  #xr-idle-modal{background:#fff;border-radius:12px;padding:60px 40px;text-align:center;max-width:450px;width:90%;box-shadow:0 10px 50px rgba(0,0,0,.3);animation:xr-idle-pop .5s cubic-bezier(.34,1.56,.64,1)}
-  @keyframes xr-idle-pop{0%{transform:scale(.8);opacity:0}100%{transform:scale(1);opacity:1}}
-  #xr-idle-modal h2{font-size:2.5rem;margin:0 0 20px 0;color:#000;font-weight:700;letter-spacing:-1px}
-  #xr-idle-modal p{font-size:1.1rem;color:#333;margin:0 0 40px 0;line-height:1.5}
-  #xr-idle-modal button{background:#888;color:#fff;border:none;padding:14px 36px;font-size:1rem;border-radius:50px;cursor:pointer;font-weight:600;transition:background .3s ease,transform .2s ease;font-family:inherit}
-  #xr-idle-modal button:hover{background:#666;transform:scale(1.05)}
-  #xr-idle-modal button:active{transform:scale(.98)}
-  @media(max-width:600px){#xr-idle-modal{padding:40px 25px}#xr-idle-modal h2{font-size:1.8rem}#xr-idle-modal p{font-size:.95rem}}
 `;
 document.head.appendChild(gs);
-
-/* ─── IDLE MODAL CREATION ─── */
-const idleOverlay = document.createElement('div');
-idleOverlay.id = 'xr-idle-overlay';
-idleOverlay.innerHTML = `
-  <div id="xr-idle-modal">
-    <h2>website idle</h2>
-    <p>we turned off the website to save your ram</p>
-    <button id="xr-idle-btn">im back, turn it on</button>
-  </div>
-`;
-document.body.appendChild(idleOverlay);
 
 /* ─── 1. NAVBAR SHRINK ─── */
 if (S.navShrink) {
@@ -305,6 +284,7 @@ const LABELS = {
   cursorTrail:  'Cursor trail',
   counterAnim:  'Number counter',
   idleDetection: 'Idle detection (save RAM)',
+  memoryMonitor: 'Show RAM usage monitor',
 };
 
 function createAnimationToggle(key) {
@@ -360,6 +340,101 @@ const idleState = {
   disabledAnimations: [],
   handler: null,
 };
+
+// Memory monitor state
+const memoryState = {
+  isMonitoring: false,
+  updateInterval: null,
+  display: null,
+  baselineMemory: null,
+};
+
+function getMemoryUsage() {
+  if (performance.memory) {
+    return {
+      used: Math.round(performance.memory.usedJSHeapSize / 1048576), // MB
+      total: Math.round(performance.memory.totalJSHeapSize / 1048576), // MB
+      limit: Math.round(performance.memory.jsHeapSizeLimit / 1048576), // MB
+      percentage: Math.round((performance.memory.usedJSHeapSize / performance.memory.jsHeapSizeLimit) * 100)
+    };
+  }
+  return null;
+}
+
+function createMemoryDisplay() {
+  const display = document.createElement('div');
+  display.id = 'xr-memory-monitor';
+  display.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #0f0;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    z-index: 99997;
+    border: 1px solid #0f0;
+    max-width: 200px;
+    line-height: 1.6;
+    display: none;
+  `;
+  document.body.appendChild(display);
+  return display;
+}
+
+function updateMemoryDisplay() {
+  const mem = getMemoryUsage();
+  if (!mem || !memoryState.display) return;
+  
+  const status = mem.percentage > 80 ? '⚠️ HIGH' : mem.percentage > 60 ? '⚡ MEDIUM' : '✅ OK';
+  
+  memoryState.display.innerHTML = `
+    <div><strong>RAM Usage</strong></div>
+    <div>${mem.used}MB / ${mem.limit}MB (${mem.percentage}%)</div>
+    <div>${status}</div>
+    <div style="margin-top: 4px; opacity: 0.7; font-size: 10px;">Heap: ${mem.total}MB</div>
+  `;
+}
+
+function startMemoryMonitor() {
+  if (memoryState.isMonitoring) return;
+  
+  memoryState.isMonitoring = true;
+  
+  if (!memoryState.display) {
+    memoryState.display = createMemoryDisplay();
+  }
+  
+  memoryState.display.style.display = 'block';
+  memoryState.baselineMemory = getMemoryUsage();
+  
+  updateMemoryDisplay();
+  
+  memoryState.updateInterval = setInterval(() => {
+    updateMemoryDisplay();
+  }, 1000); // Update every second
+  
+  console.log('📊 Memory monitor started', memoryState.baselineMemory);
+}
+
+function stopMemoryMonitor() {
+  if (!memoryState.isMonitoring) return;
+  
+  memoryState.isMonitoring = false;
+  
+  if (memoryState.updateInterval) {
+    clearInterval(memoryState.updateInterval);
+    memoryState.updateInterval = null;
+  }
+  
+  if (memoryState.display) {
+    memoryState.display.style.display = 'none';
+  }
+  
+  console.log('📊 Memory monitor stopped');
+}
 
 function applyAnimationSetting(key, enabled) {
   // This function handles enabling/disabling animations without page reload
@@ -514,6 +589,13 @@ function applyAnimationSetting(key, enabled) {
       disableIdleDetection();
     }
   }
+  else if (key === 'memoryMonitor') {
+    if (enabled) {
+      startMemoryMonitor();
+    } else {
+      stopMemoryMonitor();
+    }
+  }
   // Other animations will apply on next page load
 }
 
@@ -558,13 +640,17 @@ function initIdleDetection() {
     
     document.body.setAttribute('data-idle', 'true');
     
-    // Show idle modal
-    const idleOverlay = document.getElementById('xr-idle-overlay');
-    if (idleOverlay) {
-      idleOverlay.classList.add('xr-idle-show');
+    // Log memory before navigating
+    const mem = getMemoryUsage();
+    if (mem) {
+      console.log(`🌙 Going idle - Memory: ${mem.used}MB (${mem.percentage}%)`);
+    } else {
+      console.log('🌙 Going idle');
     }
     
-    console.log('🌙 Page idle - animations disabled to save RAM');
+    // Store current page and navigate to idle page
+    sessionStorage.setItem('previousPage', window.location.href);
+    window.location.href = 'idle.html';
   }
   
   function wakeUp() {
@@ -580,13 +666,12 @@ function initIdleDetection() {
     
     document.body.removeAttribute('data-idle');
     
-    // Hide idle modal
-    const idleOverlay = document.getElementById('xr-idle-overlay');
-    if (idleOverlay) {
-      idleOverlay.classList.remove('xr-idle-show');
+    const mem = getMemoryUsage();
+    if (mem) {
+      console.log(`✨ Waking up - Memory: ${mem.used}MB (${mem.percentage}%)`);
+    } else {
+      console.log('✨ Waking up');
     }
-    
-    console.log('✨ Activity detected - animations resumed');
   }
   
   // Set up activity listeners
@@ -641,48 +726,12 @@ if (S.idleDetection) {
   initIdleDetection();
 }
 
-// Handle idle modal button click
-document.addEventListener('DOMContentLoaded', () => {
-  const idleBtn = document.getElementById('xr-idle-btn');
-  if (idleBtn) {
-    idleBtn.addEventListener('click', () => {
-      if (idleState.isIdle) {
-        wakeUp();
-        // Reset timer
-        if (animHandlers.idleDetection) {
-          animHandlers.idleDetection();
-        }
-      }
-    });
-  }
-});
-
-// Also handle if DOM is already loaded
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    const idleBtn = document.getElementById('xr-idle-btn');
-    if (idleBtn && !idleBtn.dataset.initialized) {
-      idleBtn.dataset.initialized = 'true';
-      idleBtn.addEventListener('click', () => {
-        if (idleState.isIdle) {
-          wakeUp();
-          if (animHandlers.idleDetection) {
-            animHandlers.idleDetection();
-          }
-        }
-      });
-    }
-  });
-} else {
-  const idleBtn = document.getElementById('xr-idle-btn');
-  if (idleBtn) {
-    idleBtn.addEventListener('click', () => {
-      if (idleState.isIdle) {
-        wakeUp();
-        if (animHandlers.idleDetection) {
-          animHandlers.idleDetection();
-        }
-      }
-    });
+// Initialize memory monitor if enabled
+if (S.memoryMonitor) {
+  // Check if performance.memory is available
+  if (performance.memory) {
+    startMemoryMonitor();
+  } else {
+    console.warn('⚠️ performance.memory API not available. Memory monitoring disabled.');
   }
 }
