@@ -18,6 +18,8 @@ const DEFAULTS = {
   smoothScroll:  true,
   cursorTrail:   true,
   counterAnim:   true,
+  idleDetection: true,
+  idleTimeout:   180000, // 3 minutes in milliseconds
 };
 
 function loadSettings() {
@@ -88,8 +90,30 @@ gs.textContent = `
   .xr-sw input:checked+.xr-sl::before{transform:translateX(15px)}
   #xr-reload-note{font-size:11px;color:var(--text-secondary);margin-top:8px;padding-top:8px;border-top:1px solid var(--header-border);text-align:center}
   #xr-settings-panel .xr-row{background:var(--page-bg);border:1px solid var(--header-border);margin-bottom:4px}
+  #xr-idle-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:99998;opacity:0;transition:opacity .4s ease}
+  #xr-idle-overlay.xr-idle-show{display:flex;opacity:1}
+  #xr-idle-modal{background:#fff;border-radius:12px;padding:60px 40px;text-align:center;max-width:450px;width:90%;box-shadow:0 10px 50px rgba(0,0,0,.3);animation:xr-idle-pop .5s cubic-bezier(.34,1.56,.64,1)}
+  @keyframes xr-idle-pop{0%{transform:scale(.8);opacity:0}100%{transform:scale(1);opacity:1}}
+  #xr-idle-modal h2{font-size:2.5rem;margin:0 0 20px 0;color:#000;font-weight:700;letter-spacing:-1px}
+  #xr-idle-modal p{font-size:1.1rem;color:#333;margin:0 0 40px 0;line-height:1.5}
+  #xr-idle-modal button{background:#888;color:#fff;border:none;padding:14px 36px;font-size:1rem;border-radius:50px;cursor:pointer;font-weight:600;transition:background .3s ease,transform .2s ease;font-family:inherit}
+  #xr-idle-modal button:hover{background:#666;transform:scale(1.05)}
+  #xr-idle-modal button:active{transform:scale(.98)}
+  @media(max-width:600px){#xr-idle-modal{padding:40px 25px}#xr-idle-modal h2{font-size:1.8rem}#xr-idle-modal p{font-size:.95rem}}
 `;
 document.head.appendChild(gs);
+
+/* ─── IDLE MODAL CREATION ─── */
+const idleOverlay = document.createElement('div');
+idleOverlay.id = 'xr-idle-overlay';
+idleOverlay.innerHTML = `
+  <div id="xr-idle-modal">
+    <h2>website idle</h2>
+    <p>we turned off the website to save your ram</p>
+    <button id="xr-idle-btn">im back, turn it on</button>
+  </div>
+`;
+document.body.appendChild(idleOverlay);
 
 /* ─── 1. NAVBAR SHRINK ─── */
 if (S.navShrink) {
@@ -280,6 +304,7 @@ const LABELS = {
   smoothScroll: 'Smooth scroll',
   cursorTrail:  'Cursor trail',
   counterAnim:  'Number counter',
+  idleDetection: 'Idle detection (save RAM)',
 };
 
 function createAnimationToggle(key) {
@@ -325,6 +350,15 @@ const animHandlers = {
   activeNav: null,
   cursorTrail: null,
   ripple: null,
+  idleDetection: null,
+};
+
+// Idle detection state
+const idleState = {
+  isIdle: false,
+  timeout: null,
+  disabledAnimations: [],
+  handler: null,
 };
 
 function applyAnimationSetting(key, enabled) {
@@ -473,5 +507,182 @@ function applyAnimationSetting(key, enabled) {
       });
     }
   }
+  else if (key === 'idleDetection') {
+    if (enabled) {
+      initIdleDetection();
+    } else {
+      disableIdleDetection();
+    }
+  }
   // Other animations will apply on next page load
+}
+
+/* ═══════════════════════════════════════════
+   IDLE DETECTION SYSTEM
+   ═══════════════════════════════════════════ */
+
+function initIdleDetection() {
+  if (idleState.handler) return; // Already initialized
+  
+  const IDLE_TIMEOUT = S.idleTimeout || 180000; // 3 minutes default
+  const ANIMATIONS_TO_DISABLE = ['cursorTrail', 'parallax', 'activeNav', 'ripple'];
+  
+  function resetIdleTimer() {
+    // Clear existing timer
+    if (idleState.timeout) clearTimeout(idleState.timeout);
+    
+    // If currently idle, wake up
+    if (idleState.isIdle) {
+      wakeUp();
+    }
+    
+    // Set new idle timer
+    idleState.timeout = setTimeout(() => {
+      goIdle();
+    }, IDLE_TIMEOUT);
+  }
+  
+  function goIdle() {
+    if (idleState.isIdle) return; // Already idle
+    
+    idleState.isIdle = true;
+    idleState.disabledAnimations = [];
+    
+    // Disable resource-heavy animations
+    ANIMATIONS_TO_DISABLE.forEach(anim => {
+      if (S[anim]) {
+        idleState.disabledAnimations.push(anim);
+        applyAnimationSetting(anim, false);
+      }
+    });
+    
+    document.body.setAttribute('data-idle', 'true');
+    
+    // Show idle modal
+    const idleOverlay = document.getElementById('xr-idle-overlay');
+    if (idleOverlay) {
+      idleOverlay.classList.add('xr-idle-show');
+    }
+    
+    console.log('🌙 Page idle - animations disabled to save RAM');
+  }
+  
+  function wakeUp() {
+    if (!idleState.isIdle) return; // Not idle
+    
+    idleState.isIdle = false;
+    
+    // Re-enable animations that were disabled
+    idleState.disabledAnimations.forEach(anim => {
+      applyAnimationSetting(anim, true);
+    });
+    idleState.disabledAnimations = [];
+    
+    document.body.removeAttribute('data-idle');
+    
+    // Hide idle modal
+    const idleOverlay = document.getElementById('xr-idle-overlay');
+    if (idleOverlay) {
+      idleOverlay.classList.remove('xr-idle-show');
+    }
+    
+    console.log('✨ Activity detected - animations resumed');
+  }
+  
+  // Set up activity listeners
+  idleState.handler = () => resetIdleTimer();
+  
+  document.addEventListener('mousemove', idleState.handler, { passive: true });
+  document.addEventListener('keypress', idleState.handler, { passive: true });
+  document.addEventListener('click', idleState.handler, { passive: true });
+  document.addEventListener('touchstart', idleState.handler, { passive: true });
+  document.addEventListener('scroll', idleState.handler, { passive: true });
+  
+  // Start the timer
+  resetIdleTimer();
+  
+  animHandlers.idleDetection = resetIdleTimer;
+}
+
+function disableIdleDetection() {
+  // Clear timeout
+  if (idleState.timeout) {
+    clearTimeout(idleState.timeout);
+    idleState.timeout = null;
+  }
+  
+  // Remove event listeners
+  if (idleState.handler) {
+    document.removeEventListener('mousemove', idleState.handler);
+    document.removeEventListener('keypress', idleState.handler);
+    document.removeEventListener('click', idleState.handler);
+    document.removeEventListener('touchstart', idleState.handler);
+    document.removeEventListener('scroll', idleState.handler);
+    idleState.handler = null;
+  }
+  
+  // Wake up if idle
+  if (idleState.isIdle) {
+    const ANIMATIONS_TO_DISABLE = ['cursorTrail', 'parallax', 'activeNav', 'ripple'];
+    ANIMATIONS_TO_DISABLE.forEach(anim => {
+      if (S[anim]) {
+        applyAnimationSetting(anim, true);
+      }
+    });
+    idleState.isIdle = false;
+  }
+  
+  document.body.removeAttribute('data-idle');
+  idleState.disabledAnimations = [];
+}
+
+// Initialize idle detection if enabled
+if (S.idleDetection) {
+  initIdleDetection();
+}
+
+// Handle idle modal button click
+document.addEventListener('DOMContentLoaded', () => {
+  const idleBtn = document.getElementById('xr-idle-btn');
+  if (idleBtn) {
+    idleBtn.addEventListener('click', () => {
+      if (idleState.isIdle) {
+        wakeUp();
+        // Reset timer
+        if (animHandlers.idleDetection) {
+          animHandlers.idleDetection();
+        }
+      }
+    });
+  }
+});
+
+// Also handle if DOM is already loaded
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    const idleBtn = document.getElementById('xr-idle-btn');
+    if (idleBtn && !idleBtn.dataset.initialized) {
+      idleBtn.dataset.initialized = 'true';
+      idleBtn.addEventListener('click', () => {
+        if (idleState.isIdle) {
+          wakeUp();
+          if (animHandlers.idleDetection) {
+            animHandlers.idleDetection();
+          }
+        }
+      });
+    }
+  });
+} else {
+  const idleBtn = document.getElementById('xr-idle-btn');
+  if (idleBtn) {
+    idleBtn.addEventListener('click', () => {
+      if (idleState.isIdle) {
+        wakeUp();
+        if (animHandlers.idleDetection) {
+          animHandlers.idleDetection();
+        }
+      }
+    });
+  }
 }
