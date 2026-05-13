@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3772280062787057"
+    crossorigin="anonymous"></script>
+  <meta name="yandex-verification" content="e2a25d997c110d3f" />
+  <meta name="google-site-verification" content="AdIz_bRhs8cElxQrhPT_2cGMKeZ4MuWoLpaWjWE_EwQ" />
+  <meta name="description" content="Download Xonra games and assets across platforms.">
+  <meta name="keywords" content="Xonra, download, Roblox games, XonraBlox, game download">
+  <meta name="author" content="Xonra">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="images/Xonra-logo.png" sizes="any">
+  <meta property="og:site_name" content="Xonra" />
+  <meta property="og:title" content="Xonra – Downloads" />
+  <meta property="og:description" content="Download Xonra games and assets across platforms." />
+  <meta property="og:image" content="images/Xonra-logo.png" />
+  <script src="animations.js" defer></script>
+  <title>Xonra – Downloads</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/x-icon" href="images/Xonra-logo.png">
+  <script src="scripts.js" defer></script>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo-container logo-link" aria-label="Xonra home">
+    <img src="images/Xonra-logo.png" alt="Xonra Logo">
+    <span class="Xonra_topleft">Xonra</span>
+  </a>
+  <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Open navigation">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <div class="header-actions" id="site-menu">
+    <nav class="navigation" aria-label="Primary">
+      <a href="index.html" class="nav-link">Home</a>
+      <div class="dropdown">
+        <button class="home-dropdown-btn" type="button" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a href="index.html#about">About</a>
+          <a href="index.html#projects">Projects</a>
+          <a href="index.html#help">Help</a>
+          <a href="index.html#githubrepo">Github Repository</a>
+        </div>
+      </div>
+      <a href="OurTeam.html" class="nav-link our-team-link">Our Team</a>
+      <a href="news.html" class="nav-link News-link">News</a>
+      <a href="download.html" class="nav-link" aria-current="page">Download</a>
+      <a href="settings.html" class="nav-link settings-gear" aria-label="Settings">
+        <i class="fas fa-cog"></i>
+        <span class="settings-label">Settings</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<section id="download">
+  <h1 class="title">Download</h1>
+  <p class="sub-title">Download a shortcut to your desktop to access the website easily</p>
+
+  <div class="content" style="margin-top: 32px;">
+    <div class="card" style="text-align: center;">
+      <h3><i class="fab fa-apple"></i> iOS</h3>
+      <p class="info">Add to your Home Screen via Safari's share menu.</p>
+      <button id="ios-tutorial-btn" class="play_btn" style="margin-top: 16px; display: inline-block; cursor: pointer; border: none; font-family: inherit;">Get for iOS</button>
+    </div>
+
+    <div class="card" style="text-align: center;">
+      <h3><i class="fab fa-android"></i> Android</h3>
+      <p class="info">Install via Chrome's "Add to Home Screen" option.</p>
+      <a href="?platform=android" class="play_btn" style="margin-top: 16px; display: inline-block;">Get for Android</a>
+    </div>
+
+    <div class="card" style="text-align: center;">
+      <h3><i class="fab fa-windows"></i> Windows</h3>
+      <p class="info">Install an internet shortcut on your desktop.</p>
+      <p><strong>Put it in your desktop folder.</strong></p>
+      <a href="Download/Xonra.url" href="?platform=windows" class="play_btn" style="margin-top: 16px; display: inline-block;">Get for Windows</a>
+    </div>
+
+    <div class="card" style="text-align: center;">
+      <h3><i class="fab fa-linux"></i> Linux</h3>
+      <p class="info">Create a desktop shortcut through your browser.</p>
+      <a href="?platform=linux" class="play_btn" style="margin-top: 16px; display: inline-block;">Get for Linux</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- iOS Tutorial Modal -->
+<div id="ios-modal" class="modal-overlay">
+  <div class="mac-window">
+    <div class="mac-titlebar">
+      <div class="mac-buttons">
+        <button class="mac-btn mac-btn-red" id="close-ios-modal" aria-label="Close"></button>
+        <button class="mac-btn mac-btn-yellow" aria-label="Minimize" disabled></button>
+        <button class="mac-btn mac-btn-green" aria-label="Fullscreen" disabled></button>
+      </div>
+      <div class="mac-title">How to Add Xonra to iOS Home Screen</div>
+    </div>
+    <div class="mac-content">
+      <div class="tutorial-container">
+        <div class="tutorial-step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>Open Safari</h3>
+            <p>Launch Safari on your iPhone and navigate to xonra.vercel.app</p>
+            <div class="tutorial-image">
+              <img src="images/icons/safari-icon.jpg" alt="Safari" style="width: 80px; height: 80px;">
+            </div>
+          </div>
+        </div>
+
+        <div class="tutorial-step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>Tap the Share Button</h3>
+            <p>Tap the Share button (arrow coming out of a box) at the bottom of the screen</p>
+            <div class="tutorial-image">
+              <img src="images/others/Screenshot 2026-05-13 131842.png" alt="" style="border-radius: 10px;">
+            </div>
+          </div>
+        </div>
+
+        <div class="tutorial-step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>Select "Add to Home Screen"</h3>
+            <p>Scroll down and tap on "Add to Home Screen" option</p>
+            <div class="tutorial-image">
+              <i class="fas fa-home" style="font-size: 80px; color: var(--accent);"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="tutorial-step">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h3>Customize & Add</h3>
+            <p>Give it a name (or keep "Xonra") and tap "Add" in the top right</p>
+            <div class="tutorial-image">
+              <i class="fas fa-plus-circle" style="font-size: 80px; color: var(--accent);"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="tutorial-step">
+          <div class="step-number">5</div>
+          <div class="step-content">
+            <h3>Done!</h3>
+            <p>Xonra is now on your Home Screen. Tap it anytime to access the website.</p>
+            <div class="tutorial-image">
+              <i class="fas fa-check-circle" style="font-size: 80px; color: #10b981;"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer style="text-align: center; padding: 40px 20px; color: var(--text-secondary); font-size: 0.9rem; border-top: 1px solid var(--header-border);">
+  <a class="rating-btn" target="" rel="noopener noreferrer" href="rating.html"> Rate and give suggestions here </a>
+  <p>&copy; 2026 Xonra, all rights reserved</p>
+</footer>
+
+<script>
+  // iOS Tutorial Modal
+  const iosBtn = document.getElementById('ios-tutorial-btn');
+  const iosModal = document.getElementById('ios-modal');
+  const closeBtn = document.getElementById('close-ios-modal');
+
+  iosBtn.addEventListener('click', () => {
+    iosModal.classList.add('active');
+  });
+
+  closeBtn.addEventListener('click', () => {
+    iosModal.classList.remove('active');
+  });
+
+  iosModal.addEventListener('click', (e) => {
+    if (e.target === iosModal) {
+      iosModal.classList.remove('active');
+    }
+  });
+</script>
+
+</body>
+</html>
