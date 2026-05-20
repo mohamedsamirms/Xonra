@@ -1,4 +1,79 @@
 {
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/Website/index.html"
+    },
+    {
+      "source": "/OurTeam",
+      "destination": "/Website/OurTeam.html"
+    },
+    {
+      "source": "/our-team",
+      "destination": "/Website/OurTeam.html"
+    },
+    {
+      "source": "/Download",
+      "destination": "/Website/Download.html"
+    },
+    {
+      "source": "/download",
+      "destination": "/Website/Download.html"
+    },
+    {
+      "source": "/settings",
+      "destination": "/Website/settings.html"
+    },
+    {
+      "source": "/rating",
+      "destination": "/Website/rating.html"
+    },
+    {
+      "source": "/idle",
+      "destination": "/Website/idle.html"
+    },
+    {
+      "source": "/teams-work",
+      "destination": "/Website/team's-work.html"
+    },
+    {
+      "source": "/styles.css",
+      "destination": "/Website/styles.css"
+    },
+    {
+      "source": "/scripts.js",
+      "destination": "/Website/scripts.js"
+    },
+    {
+      "source": "/animations.js",
+      "destination": "/Website/animations.js"
+    },
+    {
+      "source": "/ads.txt",
+      "destination": "/Website/ads.txt"
+    },
+    {
+      "source": "/sitemap.xml",
+      "destination": "/Website/sitemap.xml"
+    },
+    {
+      "source": "/images/:path*",
+      "destination": "/Website/images/:path*"
+    },
+    {
+      "source": "/fonts/:path*",
+      "destination": "/Website/fonts/:path*"
+    },
+    {
+      "source": "/Download/:path*",
+      "destination": "/Website/Download/:path*"
+    },
+    {
+      "source": "/Minigames/:path*",
+      "destination": "/Website/Minigames/:path*"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",

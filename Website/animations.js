@@ -650,7 +650,7 @@ function initIdleDetection() {
     
     // Store current page and navigate to idle page
     sessionStorage.setItem('previousPage', window.location.href);
-    window.location.href = 'idle.html';
+    window.location.href = '/idle';
   }
   
   function wakeUp() {
