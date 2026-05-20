@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>404 | Xonra</title>
+    <link rel="icon" href="Website/images/Xonra-darkmode.png" sizes="any">
+    <style>
+        :root {
+            --bg-1: #07111b;
+            --bg-2: #10253a;
+            --panel: rgba(9, 19, 30, 0.78);
+            --panel-border: rgba(255, 255, 255, 0.1);
+            --text: #f3f7fb;
+            --muted: #afc2d6;
+            --accent: #58c6ff;
+            --accent-strong: #1ea6ea;
+            --shadow: 0 24px 60px rgba(0, 0, 0, 0.38);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            color: var(--text);
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(88, 198, 255, 0.18), transparent 32%),
+                radial-gradient(circle at bottom right, rgba(30, 166, 234, 0.22), transparent 28%),
+                linear-gradient(145deg, var(--bg-1), var(--bg-2));
+        }
+
+        .shell {
+            width: min(760px, 100%);
+            background: var(--panel);
+            border: 1px solid var(--panel-border);
+            border-radius: 28px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(16px);
+            overflow: hidden;
+        }
+
+        .bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 18px 22px;
+            border-bottom: 1px solid var(--panel-border);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        .content {
+            display: grid;
+            gap: 24px;
+            padding: 34px 28px 30px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .brand img {
+            width: 62px;
+            height: 62px;
+            object-fit: contain;
+        }
+
+        .eyebrow {
+            margin: 0;
+            color: var(--muted);
+            font-size: 0.9rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 8px 0 0;
+            font-size: clamp(2.3rem, 6vw, 4.8rem);
+            line-height: 0.95;
+            letter-spacing: -0.04em;
+        }
+
+        p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            max-width: 58ch;
+        }
+
+        .code {
+            display: inline-flex;
+            width: fit-content;
+            padding: 10px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(88, 198, 255, 0.24);
+            background: rgba(88, 198, 255, 0.08);
+            color: #d7f1ff;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 0.95rem;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 48px;
+            padding: 0 18px;
+            border-radius: 14px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+            color: #04111b;
+        }
+
+        .btn-secondary {
+            color: var(--text);
+            border: 1px solid var(--panel-border);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            padding-top: 6px;
+        }
+
+        .links a {
+            color: #cfeeff;
+            text-decoration: none;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 640px) {
+            .content {
+                padding: 26px 20px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="shell">
+        <div class="bar" aria-hidden="true">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+
+        <section class="content">
+            <div class="brand">
+                <img src="Website/images/Xonra-darkmode.png" alt="Xonra logo">
+                <div>
+                    <p class="eyebrow">Xonra</p>
+                    <h1>404</h1>
+                </div>
+            </div>
+
+            <span class="code">PAGE_NOT_FOUND</span>
+
+            <p>
+                That page does not exist, moved, or the link is outdated. You can jump back to the main site
+                or head somewhere useful from here.
+            </p>
+
+            <div class="actions">
+                <a class="btn btn-primary" href="/">Go Home</a>
+                <a class="btn btn-secondary" href="https://discord.gg/sH7WCHdYFp">Help</a>
+                <a class="btn btn-secondary" href="mailto:xonra_devteam@protonmail.com">Mail us</a>
+            </div>
+
+            <nav class="links" aria-label="Helpful links">
+                <a href="Website/settings.html">Settings</a>
+                <a href="Website/rating.html">Rate the site</a>
+            </nav>
+        </section>
+    </main>
+</body>
+</html>
