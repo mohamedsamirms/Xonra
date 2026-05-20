@@ -1,0 +1,56 @@
+{
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/OurTeam.html",
+      "destination": "/OurTeam",
+      "permanent": true
+    },
+    {
+      "source": "/Download.html",
+      "destination": "/Download",
+      "permanent": true
+    },
+    {
+      "source": "/download.html",
+      "destination": "/Download",
+      "permanent": true
+    },
+    {
+      "source": "/settings.html",
+      "destination": "/settings",
+      "permanent": true
+    },
+    {
+      "source": "/rating.html",
+      "destination": "/rating",
+      "permanent": true
+    },
+    {
+      "source": "/idle.html",
+      "destination": "/idle",
+      "permanent": true
+    },
+    {
+      "source": "/team's-work.html",
+      "destination": "/teams-work",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "index, follow"
+        }
+      ]
+    }
+  ]
+}
