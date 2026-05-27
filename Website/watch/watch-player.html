@@ -81,7 +81,7 @@
 
   async function loadVideo() {
     try {
-      const response = await fetch('Videos.json');
+      const response = await fetch('data/Videos.json');
       const videos = await response.json();
       
       const currentVideo = videos.find(v => v.id == videoId);
@@ -103,7 +103,7 @@
   // Optional: Load recommended videos (other videos)
   async function loadRecommended() {
     try {
-      const response = await fetch('Videos.json');
+      const response = await fetch('data/Videos.json');
       const videos = await response.json();
       const container = document.getElementById('recommendedVideos');
       container.innerHTML = '<h3 style="margin-bottom: 15px;">Recommended</h3>';

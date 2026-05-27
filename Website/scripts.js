@@ -1,11 +1,8 @@
 // Theme and layout management
 const storageKey = "xonra-theme";
 const layoutKey = "xonra-layout";
-const yCordsParamKey = "y-cords";
 const themeToggle = document.querySelector(".theme-toggle");
 const systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
-const initialUrl = new URL(window.location.href);
-const initialYCordsParam = initialUrl.searchParams.get(yCordsParamKey);
 
 // Available themes
 const themes = ['light', 'dark', 'forest', 'ocean', 'sunset', 'monochrome'];
@@ -83,68 +80,11 @@ function getPreferredLayout() {
     return "default";
 }
 
-function getScrollProgressValue() {
-    const maxScroll = Math.max(
-        0,
-        document.documentElement.scrollHeight - window.innerHeight
-    );
-    return maxScroll > 0
-        ? Math.round((window.scrollY / maxScroll) * 10000)
-        : 0;
-}
 
-function syncUrlWithScrollY() {
-    const url = new URL(window.location.href);
-    const scrollProgress = getScrollProgressValue();
-
-    url.searchParams.set(yCordsParamKey, String(Math.max(0, scrollProgress)));
-    history.replaceState(history.state, "", url);
-}
-
-function restoreScrollFromValue(yCordsValue) {
-    const yCords = Number.parseInt(yCordsValue || "", 10);
-
-    if (!Number.isFinite(yCords) || yCords < 0) {
-        return;
-    }
-
-    const maxScroll = Math.max(
-        0,
-        document.documentElement.scrollHeight - window.innerHeight
-    );
-    const clampedProgress = Math.min(10000, yCords);
-    const targetScrollY = Math.round((clampedProgress / 10000) * maxScroll);
-
-    window.scrollTo(0, targetScrollY);
-}
-
-function restoreScrollFromUrl() {
-    const url = new URL(window.location.href);
-    restoreScrollFromValue(url.searchParams.get(yCordsParamKey));
-}
-
-let yCordsFrame = null;
-let deferUrlSyncUntilLoad = initialYCordsParam !== null;
-
-function scheduleUrlScrollSync() {
-    if (deferUrlSyncUntilLoad) {
-        return;
-    }
-
-    if (yCordsFrame !== null) {
-        return;
-    }
-
-    yCordsFrame = window.requestAnimationFrame(() => {
-        yCordsFrame = null;
-        syncUrlWithScrollY();
-    });
-}
 
 
 setTheme(getPreferredTheme());
 setLayout(getPreferredLayout());
-restoreScrollFromUrl();
 
 
 if (themeToggle) {
@@ -162,23 +102,8 @@ systemTheme.addEventListener("change", (event) => {
     setTheme(event.matches ? "dark" : "light");
 });
 
-window.addEventListener("scroll", scheduleUrlScrollSync, { passive: true });
-window.addEventListener("load", () => {
-    if (initialYCordsParam !== null) {
-        restoreScrollFromValue(initialYCordsParam);
 
-        window.setTimeout(() => {
-            restoreScrollFromValue(initialYCordsParam);
-            deferUrlSyncUntilLoad = false;
-            syncUrlWithScrollY();
-        }, 150);
 
-        return;
-    }
-
-    deferUrlSyncUntilLoad = false;
-    scheduleUrlScrollSync();
-});
 
 
 document.addEventListener('DOMContentLoaded', () => {

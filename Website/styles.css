@@ -2531,6 +2531,14 @@ body[data-theme="dark"] .mac-titlebar {
   background-color: #272727;
 }
 
+.sidebar-item.active {
+  background-color: rgba(143, 178, 255, 0.15);
+  border-left: 4px solid var(--accent);
+  padding-left: 20px;
+  color: var(--accent);
+  font-weight: 600;
+}
+
 .sidebar-heading {
   padding: 12px 24px 6px;
   font-size: 14px;
@@ -2677,15 +2685,6 @@ body[data-theme="dark"] .mac-titlebar {
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s;
-  z-index: 5;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-}
-
-.subscribe-btn:hover {
-  background: #0a7cff;
-  transform: scale(1.08);
-}
-
 .subscribe-btn.subscribed {
   background: #00c853;
 }
@@ -2694,3 +2693,433 @@ body[data-theme="dark"] .mac-titlebar {
   content: "✓";
   font-size: 16px;
 }
+
+/* ============== CHANNEL STYLES ============== */
+.channel-item {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.channel-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.channel-thumbnail-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: #000;
+}
+
+.channel-thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.channel-item:hover .channel-thumbnail {
+  transform: scale(1.05);
+}
+
+.channel-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.channel-item:hover .channel-overlay {
+  opacity: 1;
+}
+
+.subscribe-channel-btn {
+  background: #1e90ff;
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.subscribe-channel-btn:hover {
+  background: #0a7cff;
+  transform: scale(1.05);
+}
+
+.channel-info {
+  padding: 16px;
+}
+
+.channel-name {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+.channel-description {
+  font-size: 13px;
+  color: #aaaaaa;
+  margin-bottom: 8px;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.channel-stats {
+  font-size: 12px;
+  color: #888888;
+}
+
+/* ============== MOBILE RESPONSIVE WATCH PAGE ============== */
+
+#pageTitle {
+  margin: 20px 0;
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
+  color: var(--accent);
+}
+
+/* Tablets and below (768px) */
+@media (max-width: 768px) {
+  #pageTitle {
+    font-size: 1.5rem;
+    margin: 15px 0 20px 12px;
+  }
+
+  .search-bar {
+    margin: 20px 0;
+    padding: 0 12px;
+  }
+
+  .search-bar input {
+    max-width: 100%;
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+
+  .video-gallery {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .thumbnail {
+    height: 90px;
+  }
+
+  .video-title {
+    font-size: 14px;
+  }
+
+  .video-publisher,
+  .video-meta {
+    font-size: 12px;
+  }
+
+  .video-actions {
+    gap: 8px;
+  }
+
+  .action-btn {
+    font-size: 16px;
+    padding: 2px;
+  }
+
+  .subscribe-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+    top: 8px;
+    right: 8px;
+  }
+
+  .video-info {
+    padding: 6px 2px;
+  }
+}
+
+/* Phones (640px and below) */
+@media (max-width: 640px) {
+  #pageTitle {
+    font-size: 1.3rem;
+    margin: 12px 0 16px 8px;
+  }
+
+  body {
+    padding-top: 88px;
+  }
+
+  .search-bar {
+    margin: 16px 8px;
+    padding: 0;
+  }
+
+  .search-bar input {
+    padding: 12px 16px;
+    font-size: 16px;
+    border-radius: 8px;
+  }
+
+  .video-gallery {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .video-item {
+    border-radius: 8px;
+  }
+
+  .thumbnail-container {
+    margin-bottom: 8px;
+  }
+
+  .thumbnail {
+    height: 85px;
+  }
+
+  .duration {
+    font-size: 11px;
+    padding: 2px 5px;
+    bottom: 6px;
+    right: 6px;
+  }
+
+  .play-overlay {
+    width: 40px;
+    height: 40px;
+  }
+
+  .play-overlay i {
+    font-size: 16px;
+  }
+
+  .video-info {
+    padding: 6px 2px;
+  }
+
+  .video-title {
+    font-size: 13px;
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+
+  .video-publisher {
+    font-size: 11px;
+    margin-bottom: 2px;
+  }
+
+  .video-meta {
+    font-size: 11px;
+  }
+
+  .video-actions {
+    margin-top: 6px;
+    gap: 6px;
+  }
+
+  .action-btn {
+    font-size: 14px;
+    padding: 2px;
+  }
+
+  .subscribe-btn {
+    width: 26px;
+    height: 26px;
+    font-size: 12px;
+    top: 6px;
+    right: 6px;
+  }
+}
+
+/* Small phones (480px and below) */
+@media (max-width: 480px) {
+  #pageTitle {
+    font-size: 1.2rem;
+    margin: 10px 0 12px 6px;
+  }
+
+  body {
+    padding-top: 88px;
+  }
+
+  .search-bar {
+    margin: 12px 6px;
+  }
+
+  .search-bar input {
+    padding: 11px 14px;
+    font-size: 16px;
+    border-radius: 6px;
+  }
+
+  .video-gallery {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .video-item {
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .video-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .thumbnail-container {
+    margin-bottom: 6px;
+    border-radius: 6px;
+  }
+
+  .thumbnail {
+    height: 75px;
+  }
+
+  .duration {
+    font-size: 10px;
+    padding: 1px 4px;
+    bottom: 4px;
+    right: 4px;
+    border-radius: 2px;
+  }
+
+  .play-overlay {
+    width: 36px;
+    height: 36px;
+  }
+
+  .play-overlay:hover {
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+
+  .play-overlay i {
+    font-size: 14px;
+    margin-left: 1px;
+  }
+
+  .video-info {
+    padding: 5px 2px;
+  }
+
+  .video-title {
+    font-size: 12px;
+    line-height: 1.25;
+    margin-bottom: 2px;
+    -webkit-line-clamp: 2;
+  }
+
+  .video-publisher {
+    font-size: 10px;
+    margin-bottom: 1px;
+  }
+
+  .video-meta {
+    font-size: 10px;
+  }
+
+  .video-actions {
+    margin-top: 4px;
+    gap: 4px;
+  }
+
+  .action-btn {
+    font-size: 12px;
+    padding: 1px;
+    min-width: 24px;
+    min-height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .action-btn:active {
+    background: #333;
+  }
+
+  .subscribe-btn {
+    width: 24px;
+    height: 24px;
+    font-size: 10px;
+    top: 4px;
+    right: 4px;
+  }
+
+  /* Improve touch targets */
+  .subscribe-btn,
+  .action-btn {
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .subscribe-btn {
+    width: 44px;
+    height: 44px;
+    top: 4px;
+    right: 4px;
+    font-size: 14px;
+  }
+
+  .action-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+    padding: 0;
+  }
+}
+
+/* Extra small phones (under 360px) */
+@media (max-width: 360px) {
+  .video-gallery {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 6px;
+  }
+
+  .thumbnail {
+    height: 200px;
+    aspect-ratio: 16/9;
+  }
+
+  .video-title {
+    font-size: 13px;
+  }
+
+  .video-publisher {
+    font-size: 11px;
+  }
+
+  .video-meta {
+    font-size: 10px;
+  }
+
+  .search-bar input {
+    padding: 10px 12px;
+    font-size: 16px;
+  }
+}
+

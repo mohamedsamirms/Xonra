@@ -3,7 +3,7 @@
 <head>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3772280062787057" crossorigin="anonymous"></script>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Xonra – Watch</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="../styles.css">
@@ -22,7 +22,6 @@
   <button class="nav-toggle" type="button">
     <span></span><span></span><span></span>
   </button>
-  </div>
 
   <div class="header-actions">
     <nav class="navigation">
@@ -40,16 +39,16 @@
 <!-- Sidebar -->
 <aside class="sidebar">
   <div class="sidebar-section">
-    <a href="#" class="sidebar-item" onclick="showSection('discover')"><i class="fas fa-compass"></i> Discover</a>
-    <a href="#" class="sidebar-item" onclick="showSection('channels')"><i class="fas fa-users"></i> Channels</a>
+    <a href="#" class="sidebar-item" data-section="discover" onclick="showSection('discover'); return false;"><i class="fas fa-compass"></i> Discover</a>
+    <a href="#" class="sidebar-item" data-section="channels" onclick="showSection('channels'); return false;"><i class="fas fa-users"></i> Channels</a>
   </div>
 
   <hr>
 
   <div class="sidebar-section">
-    <a href="#" class="sidebar-item" onclick="showSection('likes')"><i class="fas fa-thumbs-up"></i> Likes</a>
-    <a href="#" class="sidebar-item" onclick="showSection('favorites')"><i class="fas fa-heart"></i> Favourites</a>
-    <a href="#" class="sidebar-item" onclick="showSection('history')"><i class="fas fa-history"></i> Watch History</a>
+    <a href="#" class="sidebar-item" data-section="likes" onclick="showSection('likes'); return false;"><i class="fas fa-thumbs-up"></i> Likes</a>
+    <a href="#" class="sidebar-item" data-section="favorites" onclick="showSection('favorites'); return false;"><i class="fas fa-heart"></i> Favourites</a>
+    <a href="#" class="sidebar-item" data-section="history" onclick="showSection('history'); return false;"><i class="fas fa-history"></i> Watch History</a>
   </div>
 
   <hr>
@@ -65,6 +64,7 @@
 </aside>
 
 <div class="content">
+    <h2 id="pageTitle" style="margin: 20px 0; font-size: 1.8rem; color: var(--accent);">Watch</h2>
     <div class="search-bar" style="margin: 25px 0;">
     <input type="text" id="searchInput" placeholder="Search video" onkeyup="searchVideos()">
   
@@ -75,10 +75,11 @@
 
 <script>
   let allVideos = [];
+  let allChannels = [];
 
   async function loadVideos() {
     try {
-      const response = await fetch('Videos.json');
+      const response = await fetch('data/Videos.json');
       allVideos = await response.json();
       renderVideos(allVideos);
     } catch (error) {
@@ -87,9 +88,24 @@
     }
   }
 
+  async function loadChannels() {
+    try {
+      const response = await fetch('data/channels.json');
+      allChannels = await response.json();
+    } catch (error) {
+      console.error(error);
+      console.log('Failed to load channels');
+    }
+  }
+
   function renderVideos(videos) {
     const gallery = document.getElementById('videoGallery');
     gallery.innerHTML = '';
+
+    if (!videos || videos.length === 0) {
+      gallery.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#aaa;padding:60px;">No videos found.</p>';
+      return;
+    }
 
     videos.forEach(video => {
       const isLiked = isVideoLiked(video.id);
@@ -155,6 +171,35 @@
     renderVideos(allVideos);
   }
 
+  function renderChannels(channels) {
+    const gallery = document.getElementById('videoGallery');
+    gallery.innerHTML = '';
+
+    if (!channels || channels.length === 0) {
+      gallery.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#aaa;padding:60px;">No channels available.</p>';
+      return;
+    }
+
+    channels.forEach(channel => {
+      const channelHTML = `
+        <div class="channel-item">
+          <div class="channel-thumbnail-container">
+            <img src="${channel.thumbnail}" alt="${channel.name}" class="channel-thumbnail">
+            <div class="channel-overlay">
+              <button class="subscribe-channel-btn">Subscribe</button>
+            </div>
+          </div>
+          <div class="channel-info">
+            <h3 class="channel-name">${channel.name}</h3>
+            <p class="channel-description">${channel.description}</p>
+            <p class="channel-stats">${channel.subscribers} subscribers • ${channel.videoCount} videos</p>
+          </div>
+        </div>
+      `;
+      gallery.innerHTML += channelHTML;
+    });
+  }
+
   function searchVideos() {
     const query = document.getElementById('searchInput').value.toLowerCase().trim();
     const filtered = allVideos.filter(v => v.title.toLowerCase().includes(query));
@@ -162,11 +207,28 @@
   }
 
   function showSection(section) {
-    document.getElementById('pageTitle').textContent = 
-      section === 'discover' ? 'Watch' : 
-      section === 'likes' ? 'Liked Videos' :
-      section === 'favorites' ? 'Favourites' :
-      section === 'history' ? 'Watch History' : 'Channels';
+    // Update page title
+    const titleElement = document.getElementById('pageTitle');
+    const sectionTitles = {
+      'discover': 'Watch',
+      'likes': 'Liked Videos',
+      'favorites': 'Favourites',
+      'history': 'Watch History',
+      'channels': 'Channels'
+    };
+    titleElement.textContent = sectionTitles[section] || 'Watch';
+
+    // Update active sidebar item
+    document.querySelectorAll('.sidebar-item[data-section]').forEach(item => {
+      item.classList.remove('active');
+    });
+    const activeItem = document.querySelector(`.sidebar-item[data-section="${section}"]`);
+    if (activeItem) {
+      activeItem.classList.add('active');
+    }
+
+    // Clear search
+    document.getElementById('searchInput').value = '';
 
     const gallery = document.getElementById('videoGallery');
 
@@ -184,10 +246,20 @@
       if (!favVideos.length) gallery.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#aaa;padding:60px;">No favourites yet.</p>';
     } else if (section === 'history') {
       gallery.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#aaa;padding:60px;">Watch History coming soon...</p>';
+    } else if (section === 'channels') {
+      renderChannels(allChannels);
+      if (!allChannels.length) gallery.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#aaa;padding:60px;">No channels available.</p>';
     }
   }
 
-  document.addEventListener('DOMContentLoaded', loadVideos);
+  // Initialize with Discover section
+  document.addEventListener('DOMContentLoaded', () => {
+    loadVideos();
+    loadChannels();
+    showSection('discover');
+  });
+
+
 </script>
 </body>
 </html>
