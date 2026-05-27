@@ -6,7 +6,7 @@
   <meta name="yandex-verification" content="e2a25d997c110d3f" />
   <meta name="google-site-verification" content="AdIz_bRhs8cElxQrhPT_2cGMKeZ4MuWoLpaWjWE_EwQ" />
   <meta name="description" content="Watch some videos made by Xonra or fans!" />
-  <meta name="keywords" content="Xonra, watch, Roblox games, XonraBlox, cobra"><!--for the google autocorrect -->
+  <meta name="keywords" content="Xonra, watch, Roblox games, XonraBlox, cobra">
   <meta name="author" content="Xonra">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,35 +23,38 @@
   <script src="../scripts.js" defer></script>
 </head>
 <body>
-
 <header>
-  <a href="/" class="logo-container logo-link" aria-label="Xonra home">
-    <img src="../images/Xonra-logo.png" alt="Xonra Logo">
+  <a href="../" class="logo-container logo-link" aria-label="Xonra home">
+    <img src="../images/Xonra-darkmode.png" 
+         alt="Xonra" 
+         onerror="this.onerror=null; this.src='../images/Xonra-logo.png';">
     <span class="Xonra_topleft">Xonra</span>
   </a>
+  
   <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Open navigation">
     <span></span>
     <span></span>
     <span></span>
   </button>
+  
   <div class="header-actions" id="site-menu">
     <nav class="navigation" aria-label="Primary">
-      <a href="/" class="nav-link">Home</a>
+      <a href="../" class="nav-link">Home</a>
       <div class="dropdown">
         <button class="home-dropdown-btn" type="button" aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-chevron-down"></i>
         </button>
         <div class="dropdown-content">
-          <a href="/#about">About</a>
-          <a href="/#projects">Projects</a>
-          <a href="/#help">Help</a>
-          <a href="/#githubrepo">Github Repository</a>
+          <a href="../#about">About</a>
+          <a href="../#projects">Projects</a>
+          <a href="../#help">Help</a>
+          <a href="../#githubrepo">Github Repository</a>
         </div>
       </div>
-      <a href="/OurTeam" class="nav-link our-team-link">Our Team</a>
-      <a href="/news" class="nav-link News-link">News</a>
-      <a href="/Watch" class="nav-link" aria-current="page">Watch</a>
-      <a href="/settings" class="nav-link settings-gear" aria-label="Settings">
+      <a href="../OurTeam" class="nav-link our-team-link">Our Team</a>
+      <a href="../news" class="nav-link News-link">News</a>
+      <a href="watch.html" class="nav-link" aria-current="page">Watch</a>
+      <a href="../settings" class="nav-link settings-gear" aria-label="Settings">
         <i class="fas fa-cog"></i>
         <span class="settings-label">Settings</span>
       </a>
@@ -59,17 +62,67 @@
   </div>
 </header>
 <div class="content">
-  <div class="video-gallery">
-    <div class="video-item
-">
-      <iframe width="200" height="100" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
-      <p>Example Video 1</p>
-
-    </div>
-    <div class="video-item">
-      <iframe width="200" height="100" src="https://www.youtube.com/embed/9bZkp7q19f0" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
-      <p>Example Video 2</p>
-    </div>
+  <h1 class="page-title">Watch</h1>
+  
+  <!-- Search Bar -->
+  <div class="search-bar" style="margin: 20px 0;">
+    <input type="text" id="searchInput" placeholder="Search videos..." onkeyup="searchVideos()">
   </div>
+
+  <!-- Dynamic Video Grid -->
+  <div class="video-gallery" id="videoGallery">
+    <div class="loading">Loading videos...</div>
+  </div>
+</div>
+
+<script>
+  async function loadVideos() {
+    try {
+      const response = await fetch('Videos.json');
+      const videos = await response.json();
+      
+      const gallery = document.getElementById('videoGallery');
+      gallery.innerHTML = '';
+
+      videos.forEach(video => {
+        const videoHTML = `
+          <div class="video-item" data-id="${video.id}">
+            <a href="watch-player.html?id=${video.id}" class="thumbnail-container">
+              <img src="${video.thumbnail}" alt="${video.title}" class="thumbnail">
+              <div class="duration">${video.duration || ''}</div>
+              <div class="play-overlay">
+                <i class="fas fa-play"></i>
+              </div>
+            </a>
+            <div class="video-info">
+              <h3 class="video-title">${video.title}</h3>
+              <p class="video-publisher">${video.publisher}</p>
+              <p class="video-meta">${video.time} • ${video.views || '1K views'}</p>
+            </div>
+          </div>
+        `;
+        gallery.innerHTML += videoHTML;
+      });
+    } catch (error) {
+      console.error('Error loading videos:', error);
+      document.getElementById('videoGallery').innerHTML = 
+        '<p style="color: red; text-align: center; grid-column: 1 / -1;">Failed to load videos. Make sure Videos.json is in the same folder.</p>';
+    }
+  }
+
+  function searchVideos() {
+    const query = document.getElementById('searchInput').value.toLowerCase().trim();
+    const items = document.querySelectorAll('.video-item');
+    
+    items.forEach(item => {
+      const title = item.querySelector('.video-title').textContent.toLowerCase();
+      item.style.display = title.includes(query) ? '' : 'none';
+    });
+  }
+
+  // Load videos when page is ready
+  document.addEventListener('DOMContentLoaded', loadVideos);
+</script>
+
 </body>
 </html>

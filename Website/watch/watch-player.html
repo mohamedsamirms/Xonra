@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3772280062787057"
+    crossorigin="anonymous"></script>
+  <meta name="yandex-verification" content="e2a25d997c110d3f" />
+  <meta name="google-site-verification" content="AdIz_bRhs8cElxQrhPT_2cGMKeZ4MuWoLpaWjWE_EwQ" />
+  <meta name="description" content="Watch videos on Xonra" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../images/Xonra-darkmode.png" sizes="any">
+  <title id="pageTitle">Xonra – Watch</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="../styles.css">
+  <script src="../scripts.js" defer></script>
+  <script src="../animations.js" defer></script>
+</head>
+<body>
+
+<header>
+  <a href="../" class="logo-container logo-link" aria-label="Xonra home">
+    <img src="../images/Xonra-darkmode.png" 
+         alt="Xonra" 
+         onerror="this.onerror=null; this.src='../images/Xonra-logo.png';">
+    <span class="Xonra_topleft">Xonra</span>
+  </a>
+  
+  <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Open navigation">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  
+  <div class="header-actions" id="site-menu">
+    <nav class="navigation" aria-label="Primary">
+      <a href="../" class="nav-link">Home</a>
+      <div class="dropdown">
+        <button class="home-dropdown-btn" type="button" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a href="../#about">About</a>
+          <a href="../#projects">Projects</a>
+          <a href="../#help">Help</a>
+          <a href="../#githubrepo">Github Repository</a>
+        </div>
+      </div>
+      <a href="../OurTeam" class="nav-link our-team-link">Our Team</a>
+      <a href="../news" class="nav-link News-link">News</a>
+      <a href="watch.html" class="nav-link" aria-current="page">Watch</a>
+      <a href="../settings" class="nav-link settings-gear" aria-label="Settings">
+        <i class="fas fa-cog"></i>
+        <span class="settings-label">Settings</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<div class="player-page">
+  <div class="main-content">
+    <div class="video-player-container">
+      <iframe id="videoPlayer" width="100%" height="520" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <div class="video-details">
+      <h1 id="videoTitle"></h1>
+      <p id="videoMeta" class="video-meta"></p>
+      <p id="videoDescription" class="video-description"></p>
+    </div>
+  </div>
+
+  <!-- Recommended Videos Sidebar -->
+  <div class="recommended-sidebar" id="recommendedVideos">
+    <!-- Will be populated by JavaScript -->
+  </div>
+</div>
+
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const videoId = urlParams.get('id');
+
+  async function loadVideo() {
+    try {
+      const response = await fetch('Videos.json');
+      const videos = await response.json();
+      
+      const currentVideo = videos.find(v => v.id == videoId);
+
+      if (currentVideo) {
+        // Load main video
+        document.getElementById('videoPlayer').src = currentVideo.url;
+        document.getElementById('videoTitle').textContent = currentVideo.title;
+        document.getElementById('videoMeta').textContent = 
+          `${currentVideo.publisher} • ${currentVideo.time} • ${currentVideo.views || '1K views'}`;
+        document.getElementById('videoDescription').textContent = currentVideo.description || 'No description available.';
+        document.getElementById('pageTitle').textContent = `${currentVideo.title} - Xonra`;
+      }
+    } catch (error) {
+      console.error('Error loading video:', error);
+    }
+  }
+
+  // Optional: Load recommended videos (other videos)
+  async function loadRecommended() {
+    try {
+      const response = await fetch('Videos.json');
+      const videos = await response.json();
+      const container = document.getElementById('recommendedVideos');
+      container.innerHTML = '<h3 style="margin-bottom: 15px;">Recommended</h3>';
+
+      videos.forEach(video => {
+        if (video.id != videoId) {   // Don't show current video
+          const recHTML = `
+            <div class="video-item" data-id="${video.id}">
+              <a href="watch-player.html?id=${video.id}" class="thumbnail-container">
+                <img src="${video.thumbnail}" alt="${video.title}" class="thumbnail">
+                <div class="duration">${video.duration || ''}</div>
+              </a>
+              <div class="video-info">
+                <h3 class="video-title">${video.title}</h3>
+                <p class="video-publisher">${video.publisher}</p>
+              </div>
+            </div>
+          `;
+          container.innerHTML += recHTML;
+        }
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  // Initialize
+  document.addEventListener('DOMContentLoaded', () => {
+    loadVideo();
+    loadRecommended();
+  });
+</script>
+
+</body>
+</html>
