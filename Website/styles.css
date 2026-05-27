@@ -2466,3 +2466,199 @@ body[data-theme="dark"] .mac-titlebar {
   }
 }
 
+/* ============== IMPROVED SIDEBAR ============== */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 60px;
+  bottom: 0;
+  width: 260px;
+  background-color: #181818;
+  border-right: 1px solid #303030;
+  overflow-y: auto;
+  padding: 12px 0;
+  z-index: 90;
+  color: #e0e0e0;
+}
+
+.sidebar-section {
+  margin-bottom: 8px;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  padding: 11px 24px;
+  color: #e0e0e0;
+  text-decoration: none;
+  font-size: 15px;
+  gap: 20px;
+}
+
+.sidebar-item:hover {
+  background-color: #272727;
+}
+
+.sidebar-heading {
+  padding: 12px 24px 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #aaaaaa;
+  text-transform: uppercase;
+}
+
+.user-circle {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-color: #555;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+/* Storage Note */
+.storage-note {
+  position: absolute;
+  bottom: 20px;
+  left: 24px;
+  right: 24px;
+  background-color: #272727;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: #aaaaaa;
+}
+
+/* Main content shift */
+.content, .player-page {
+  margin-left: 260px;
+}
+
+@media (max-width: 900px) {
+  .sidebar { display: none; }
+  .content, .player-page { margin-left: 0; }
+}
+
+.video-actions {
+  margin-top: 8px;
+  display: flex;
+  gap: 12px;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.action-btn:hover {
+  background: #272727;
+  color: white;
+}
+
+.action-btn.liked { color: #ff4d4d; }
+.action-btn.favorited { color: #ffd700; }
+
+/* Better Search Bar */
+.search-bar input {
+  width: 100%;
+  max-width: 620px;
+  padding: 14px 20px;
+  background-color: #272727;
+  border: 1px solid #444;
+  border-radius: 9999px;
+  color: white;
+  font-size: 16px;
+  transition: all 0.3s;
+}
+
+.search-bar input:focus {
+  outline: none;
+  border-color: #1e90ff;
+  background-color: #1f1f1f;
+  box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.2);
+}
+
+/* Subscribe Button */
+.subscribe-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  background: #1e90ff;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  z-index: 5;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.subscribe-btn:hover {
+  background: #0a7cff;
+  transform: scale(1.1);
+}
+
+.subscribe-btn.subscribed {
+  background: #00c853;
+}
+
+.subscribe-btn.subscribed::after {
+  content: "✓";
+  font-size: 16px;
+}
+
+/* Video Item Improvements */
+.thumbnail-container {
+  position: relative;
+}
+
+.video-item {
+  position: relative;
+}
+
+.subscribe-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  background: #1e90ff;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  z-index: 5;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.subscribe-btn:hover {
+  background: #0a7cff;
+  transform: scale(1.08);
+}
+
+.subscribe-btn.subscribed {
+  background: #00c853;
+}
+
+.subscribe-btn.subscribed::after {
+  content: "✓";
+  font-size: 16px;
+}

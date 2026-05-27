@@ -1,13 +1,13 @@
 [
   {
     "id": 1,
-    "title": "Xonra Minigames Trailer",
-    "description": "Official trailer for our upcoming minigames collection",
+    "title": "Test video",
+    "description": "a test video for the watch page",
     "thumbnail": "https://img.youtube.com/vi/VIDEO_ID/hqdefault.jpg",
     "url": "https://www.youtube.com/embed/VIDEO_ID",
     "publisher": "Xonra Official",
-    "time": "2 days ago",
-    "views": "12K",
-    "duration": "3:45"
+    "time": "5/27/2026",
+    "views": "0",
+    "duration": "0:00"
   }
 ]
