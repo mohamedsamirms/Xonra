@@ -12,6 +12,30 @@
 </head>
 <body>
 
+<!-- Top Navigation Bar -->
+<header>
+  <a href="../" class="logo-container logo-link">
+    <img src="../images/Xonra-darkmode.png" alt="Xonra" style="height:42px;">
+    <span class="Xonra_topleft">Xonra</span>
+  </a>
+
+  <button class="nav-toggle" type="button">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="header-actions">
+    <nav class="navigation">
+      <a href="../" class="nav-link">Home</a>
+      <a href="../OurTeam" class="nav-link">Our Team</a>
+      <a href="../news" class="nav-link">News</a>
+      <a href="watch.html" class="nav-link active">Watch</a>
+      <a href="../settings" class="nav-link settings-gear">
+        <i class="fas fa-cog"></i>
+      </a>
+    </nav>
+  </div>
+</header>
+
 <!-- Sidebar -->
 <aside class="sidebar">
   <div class="sidebar-section">
@@ -78,10 +102,7 @@
           <a href="watch-player.html?id=${video.id}" class="thumbnail-container">
             <img src="${video.thumbnail}" alt="${video.title}" class="thumbnail">
             <div class="duration">${video.duration || '0:00'}</div>
-            
-            <!-- Blue Subscribe Button -->
             <button onclick="toggleSubscribe(this); event.stopImmediatePropagation();" class="subscribe-btn">+</button>
-            
             <div class="play-overlay"><i class="fas fa-play"></i></div>
           </a>
           <div class="video-info">
@@ -114,7 +135,6 @@
     }
   }
 
-  // Like / Favorite System
   function getLikedVideos() { return JSON.parse(localStorage.getItem('xonra_liked') || '[]'); }
   function getFavoritedVideos() { return JSON.parse(localStorage.getItem('xonra_favorites') || '[]'); }
 
@@ -157,15 +177,15 @@
     } else if (section === 'likes') {
       const likedIds = getLikedVideos();
       const likedVideos = allVideos.filter(v => likedIds.includes(v.id));
-      renderVideos(likedVideos);
-      if (!likedVideos.length) gallery.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:#aaa; padding:60px;">No liked videos yet.</p>';
+      renderVideos(likedVideos.length ? likedVideos : []);
+      if (!likedVideos.length) gallery.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#aaa;padding:60px;">No liked videos yet.</p>';
     } else if (section === 'favorites') {
       const favIds = getFavoritedVideos();
       const favVideos = allVideos.filter(v => favIds.includes(v.id));
-      renderVideos(favVideos);
-      if (!favVideos.length) gallery.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:#aaa; padding:60px;">No favourites yet.</p>';
+      renderVideos(favVideos.length ? favVideos : []);
+      if (!favVideos.length) gallery.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#aaa;padding:60px;">No favourites yet.</p>';
     } else if (section === 'history') {
-      gallery.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:#aaa; padding:60px;">Watch History coming soon...</p>';
+      gallery.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#aaa;padding:60px;">Watch History coming soon...</p>';
     }
   }
 
