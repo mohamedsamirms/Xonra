@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "thumbnail": "https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
+    "title": "Example Video 1",
+    "description": "This is a simple example video.",
+    "publisher": "Xonra",
+    "time": "1 hour",
+    "url": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+  },
+  {
+    "id": 2,
+    "thumbnail": "https://img.youtube.com/vi/9bZkp7q19f0/hqdefault.jpg",
+    "title": "Example Video 2",
+    "description": "This is another example video.",
+    "publisher": "Xonra",
+    "time": "2 hours",
+    "url": "https://www.youtube.com/embed/9bZkp7q19f0"
+  }
+]

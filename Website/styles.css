@@ -2237,3 +2237,12 @@ body[data-theme="dark"] .mac-titlebar {
         height: 60px;
     }
 }
+
+.video-item {
+    display: inline-flex;
+    gap: 16px;
+    align-items: center;
+    padding: 12px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
