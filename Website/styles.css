@@ -6,6 +6,7 @@
     align-items: center;
 }
 
+
 :root {
     --page-bg: #f6f8fc;
     --surface-bg: #ffffff;
@@ -509,6 +510,7 @@ section {
     border-radius: 16px;
     box-shadow: var(--card-shadow);
     border: 1px solid rgba(255, 255, 255, 0.06);
+    
     transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
@@ -2571,7 +2573,7 @@ body[data-theme="dark"] .mac-titlebar {
 }
 
 /* Main content shift */
-.content, .player-page {
+.player-page {
   margin-left: 260px;
 }
 
@@ -2687,6 +2689,7 @@ body[data-theme="dark"] .mac-titlebar {
   transition: all 0.2s;
 .subscribe-btn.subscribed {
   background: #00c853;
+}
 }
 
 .subscribe-btn.subscribed::after {
