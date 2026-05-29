@@ -198,8 +198,11 @@
         <div style="max-width: 900px; margin: 0 auto;">
             <div class="settings-group">
                 <h3>About</h3>
-                <p style="color: var(--text-secondary);">Xonra · version 2.3.5</p>
+                <p style="color: var(--text-secondary);">Xonra · version 3.0</p>
                 <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 8px;">
+                    <button class="discord-btn" id="exportSettings"><i class="fas fa-download" style="margin-right: 6px;"></i>Export Settings</button>
+                    <button class="discord-btn" id="importSettings"><i class="fas fa-upload" style="margin-right: 6px;"></i>Import Settings</button>
+                    <input type="file" id="importFile" accept=".json" style="display: none;">
                     Enhanced with multiple themes and layout customization options.
                 </p>
             </div>
@@ -208,7 +211,6 @@
 
     <footer style="text-align: center; padding: 40px 20px; color: var(--text-secondary); font-size: 0.9rem; border-top: 1px solid var(--header-border);">
         <a class="rating-btn" target="" rel="noopener noreferrer" href="/rating"> Rate and give suggestions here </a>
-        <a href="/Minigames/minigames.html"> Link.link </a>
         <p>&copy; 2026 Xonra, all rights reserved</p>
     </footer>
 
@@ -236,6 +238,200 @@
                 this.style.borderBottomColor = 'var(--accent)';
             });
         });
+
+        // ============================================
+        // IMPORT/EXPORT SETTINGS
+        // ============================================
+        
+        // Get all current settings from localStorage
+        function getAllSettings() {
+            return {
+                theme: localStorage.getItem('xonra-theme') || 'dark',
+                layout: localStorage.getItem('xonra-layout') || 'default',
+                cardWidth: localStorage.getItem('xonra-card-width') || '360',
+                sectionSpacing: localStorage.getItem('xonra-section-spacing') || '88',
+                animations: localStorage.getItem('xonraAnimSettings') ? JSON.parse(localStorage.getItem('xonraAnimSettings')) : {},
+                exportDate: new Date().toISOString(),
+                version: '1.0'
+            };
+        }
+
+        // Export settings to JSON file
+        function exportSettings() {
+            const settings = getAllSettings();
+            const dataStr = JSON.stringify(settings, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `xonra-settings-${new Date().getTime()}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            
+            // Show success message
+            showNotification('Settings exported successfully!', 'success');
+        }
+
+        // Import settings from JSON file
+        function importSettings(file) {
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const settings = JSON.parse(e.target.result);
+                    
+                    // Validate settings object
+                    if (!settings.theme && !settings.layout && !settings.cardWidth && !settings.sectionSpacing && !settings.animations) {
+                        throw new Error('Invalid settings file format');
+                    }
+
+                    // Import theme
+                    if (settings.theme) {
+                        localStorage.setItem('xonra-theme', settings.theme);
+                        if (window.setTheme) window.setTheme(settings.theme);
+                    }
+
+                    // Import layout
+                    if (settings.layout) {
+                        localStorage.setItem('xonra-layout', settings.layout);
+                        if (window.setLayout) window.setLayout(settings.layout);
+                    }
+
+                    // Import card width
+                    if (settings.cardWidth) {
+                        localStorage.setItem('xonra-card-width', settings.cardWidth);
+                        document.documentElement.style.setProperty('--card-width', settings.cardWidth + 'px');
+                        const cardWidthSlider = document.getElementById('cardWidth');
+                        if (cardWidthSlider) cardWidthSlider.value = settings.cardWidth;
+                        const cardWidthValue = document.getElementById('cardWidthValue');
+                        if (cardWidthValue) cardWidthValue.textContent = settings.cardWidth + 'px';
+                    }
+
+                    // Import section spacing
+                    if (settings.sectionSpacing) {
+                        localStorage.setItem('xonra-section-spacing', settings.sectionSpacing);
+                        document.documentElement.style.setProperty('--section-spacing', settings.sectionSpacing + 'px');
+                        const sectionSpacingSlider = document.getElementById('sectionSpacing');
+                        if (sectionSpacingSlider) sectionSpacingSlider.value = settings.sectionSpacing;
+                        const sectionSpacingValue = document.getElementById('sectionSpacingValue');
+                        if (sectionSpacingValue) sectionSpacingValue.textContent = settings.sectionSpacing + 'px';
+                    }
+
+                    // Import animations
+                    if (settings.animations && Object.keys(settings.animations).length > 0) {
+                        localStorage.setItem('xonraAnimSettings', JSON.stringify(settings.animations));
+                        
+                        // Update animation toggles in the UI
+                        const animSettings = settings.animations;
+                        for (const [key, value] of Object.entries(animSettings)) {
+                            const toggle = document.querySelector(`input[data-xr-setting="${key}"]`);
+                            if (toggle) toggle.checked = value;
+                        }
+                    }
+
+                    showNotification('Settings imported successfully! Refreshing page...', 'success');
+                    
+                    // Reload page after a short delay to apply all settings
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1500);
+
+                } catch (error) {
+                    showNotification('Error importing settings: ' + error.message, 'error');
+                    console.error('Import error:', error);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Show notification message
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 16px 24px;
+                border-radius: 8px;
+                font-weight: 500;
+                z-index: 10000;
+                animation: slideIn 0.3s ease;
+                max-width: 400px;
+            `;
+            
+            if (type === 'success') {
+                notification.style.background = '#10b981';
+                notification.style.color = 'white';
+            } else if (type === 'error') {
+                notification.style.background = '#ef4444';
+                notification.style.color = 'white';
+            } else {
+                notification.style.background = 'var(--accent)';
+                notification.style.color = 'white';
+            }
+            
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => document.body.removeChild(notification), 300);
+            }, 3000);
+        }
+
+        // Add animation styles for notifications
+        const notificationStyles = document.createElement('style');
+        notificationStyles.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(notificationStyles);
+
+        // Event listeners
+        const exportBtn = document.getElementById('exportSettings');
+        const importBtn = document.getElementById('importSettings');
+        const importFile = document.getElementById('importFile');
+
+        if (exportBtn) {
+            exportBtn.addEventListener('click', exportSettings);
+        }
+
+        if (importBtn) {
+            importBtn.addEventListener('click', () => {
+                importFile.click();
+            });
+        }
+
+        if (importFile) {
+            importFile.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    importSettings(e.target.files[0]);
+                    // Reset file input
+                    importFile.value = '';
+                }
+            });
+        }
     </script>
 </body>
 </html>
