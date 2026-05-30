@@ -1,10 +1,10 @@
 [
   {
     "id": 1,
-    "name": "Xonra Official",
+    "name": "Xonra Official [verified]",
     "description": "The official Xonra channel with updates and announcements",
-    "thumbnail": "https://via.placeholder.com/200x200?text=Xonra+Official",
-    "subscribers": "1.2K",
-    "videoCount": "12"
+    "thumbnail": "https://xonra.vercel.app/images/Xonra-darkmode.png",
+    "subscribers": "0",
+    "videoCount": "1"
   }
 ]

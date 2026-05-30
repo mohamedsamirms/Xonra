@@ -3126,3 +3126,21 @@ body[data-theme="dark"] .mac-titlebar {
   }
 }
 
+.channel-thumbnail-container{
+    height: 250px;
+    width: 100%;
+}
+
+.verified-badge {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-color: #1e90ff;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
