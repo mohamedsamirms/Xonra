@@ -2577,11 +2577,6 @@ body[data-theme="dark"] .mac-titlebar {
   margin-left: 260px;
 }
 
-@media (max-width: 900px) {
-  .sidebar { display: none; }
-  .content, .player-page { margin-left: 0; }
-}
-
 .video-actions {
   margin-top: 8px;
   display: flex;
