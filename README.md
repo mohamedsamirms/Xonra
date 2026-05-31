@@ -17,3 +17,4 @@
     you can check our discord, also linked below.
 </p>
 <a href = https://discord.gg/BR9hQTmSU5/ _blank>discord.gg/XonraBlox</a>
+<h3>check <a href="https://github.com/mohamedsamirms/Xonra/blob/main/about-us.md">about-us.md</a> for more info about us</h3>
