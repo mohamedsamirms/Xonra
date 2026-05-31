@@ -77,10 +77,58 @@
   let allVideos = [];
   let allChannels = [];
 
+  // Extract duration from video file
+  function getDuration(videoUrl) {
+    return new Promise((resolve) => {
+      const video = document.createElement('video');
+      video.src = videoUrl;
+      video.addEventListener('loadedmetadata', () => {
+        const duration = Math.floor(video.duration);
+        const minutes = Math.floor(duration / 60);
+        const seconds = duration % 60;
+        const formatted = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        resolve(formatted);
+      }, { once: true });
+      video.addEventListener('error', () => resolve('0:00'), { once: true });
+    });
+  }
+
+  // Generate thumbnail from video
+  function getThumbnail(videoUrl) {
+    return new Promise((resolve) => {
+      const video = document.createElement('video');
+      video.src = videoUrl;
+      video.currentTime = 1; // Seek to 1 second
+      video.addEventListener('seeked', () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 320;
+        canvas.height = 180;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(video, 0, 0, 320, 180);
+        canvas.toBlob((blob) => {
+          const url = URL.createObjectURL(blob);
+          resolve(url);
+        }, 'image/jpeg', 0.7);
+      }, { once: true });
+      video.addEventListener('error', () => resolve(''), { once: true });
+    });
+  }
+
   async function loadVideos() {
     try {
       const response = await fetch('data/Videos.json');
       allVideos = await response.json();
+      
+      // Extract duration and thumbnail for each video
+      for (let video of allVideos) {
+        if (video.duration === '0:00' || video.duration === '') {
+          video.duration = await getDuration(video.url);
+        }
+        if (video.thumbnail === '' || video.thumbnail.includes('vid-images')) {
+          video.thumbnail = await getThumbnail(video.url);
+        }
+      }
+      
       renderVideos(allVideos);
     } catch (error) {
       console.error(error);

@@ -15,11 +15,103 @@
   <script src="../animations.js" defer></script>
 
   <style>
+    /* Smaller Header */
+    header {
+      min-height: 50px !important;
+      padding: 8px clamp(12px, 3vw, 24px) !important;
+    }
+    
+    .logo-container img {
+      width: 50px !important;
+      height: 50px !important;
+    }
+    
+    .logo-container span {
+      font-size: 1.1rem !important;
+    }
+    
+    .nav-link, .settings-gear {
+      font-size: 0.9rem !important;
+      padding: 8px 10px !important;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 50px;
+      bottom: 0;
+      width: 240px;
+      background-color: #181818;
+      border-right: 1px solid #303030;
+      overflow-y: auto;
+      padding: 12px 0;
+      z-index: 90;
+      color: #e0e0e0;
+    }
+
+    .sidebar-section {
+      margin-bottom: 8px;
+    }
+
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      color: #e0e0e0;
+      text-decoration: none;
+      font-size: 14px;
+      gap: 15px;
+      transition: all 0.2s;
+    }
+
+    .sidebar-item:hover {
+      background-color: #272727;
+    }
+
+    .sidebar-item.active {
+      background-color: rgba(143, 178, 255, 0.15);
+      border-left: 4px solid var(--accent);
+      padding-left: 16px;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .sidebar-heading {
+      padding: 10px 20px 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #aaaaaa;
+      text-transform: uppercase;
+    }
+
+    .user-circle {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      background-color: #555;
+      border-radius: 50%;
+    }
+
+    .storage-note {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      background-color: #272727;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      line-height: 1.4;
+      color: #aaaaaa;
+    }
+
+    /* Player Page with Sidebar */
     .player-page {
       display: flex;
-      gap: 24px;
-      max-width: 1450px;
-      margin: 30px auto;
+      gap: 20px;
+      max-width: none;
+      margin: 20px 0 20px 240px;
       padding: 0 20px;
     }
     .main-content { flex: 1; min-width: 0; }
@@ -89,33 +181,39 @@
       color: #00d4ff;
       transform: scale(1.15);
     }
-    .buttons select {
-      background: rgba(0,0,0,0.7);
-      color: white;
-      border: 1px solid #555;
-      border-radius: 6px;
-      padding: 5px 10px;
-      font-size: 15px;
-    }
 
     .video-details {
       background: #1a1a1a;
       padding: 24px;
       border-radius: 12px;
     }
+
     .video-details h1 {
       font-size: 1.85rem;
       margin: 0 0 10px 0;
     }
-    .video-meta { color: #aaa; margin-bottom: 16px; }
-    .video-description { color: #ddd; line-height: 1.6; }
 
-    /* Recommended */
+    .video-meta {
+      color: #aaa;
+      margin-bottom: 16px;
+    }
+
+    .video-description {
+      color: #ddd;
+      line-height: 1.6;
+    }
+
+    /* Recommended Sidebar */
     .recommended-sidebar {
       width: 380px;
       flex-shrink: 0;
     }
-    .recommended-sidebar h3 { color: #fff; margin-bottom: 18px; }
+
+    .recommended-sidebar h3 {
+      color: #fff;
+      margin-bottom: 18px;
+    }
+
     .video-item {
       display: flex;
       gap: 12px;
@@ -123,22 +221,259 @@
       padding: 4px;
       border-radius: 10px;
       transition: 0.2s;
+      cursor: pointer;
     }
-    .video-item:hover { background: #252525; }
+
+    .video-item:hover {
+      background: #252525;
+    }
+
     .thumbnail {
       width: 168px;
       height: 94px;
       object-fit: cover;
       border-radius: 8px;
+      flex-shrink: 0;
+      position: relative;
     }
+
     .duration {
       position: absolute;
-      bottom: 6px; right: 6px;
+      bottom: 6px;
+      right: 6px;
       background: rgba(0,0,0,0.8);
       color: white;
       font-size: 12px;
       padding: 1px 6px;
       border-radius: 3px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .sidebar {
+        width: 200px;
+        top: 50px;
+      }
+      
+      .player-page {
+        margin-left: 200px;
+        gap: 16px;
+        padding: 0 16px;
+      }
+
+      .recommended-sidebar {
+        width: 280px;
+      }
+
+      .sidebar-item {
+        padding: 8px 16px;
+        font-size: 13px;
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 180px;
+      }
+
+      .player-page {
+        margin-left: 180px;
+        gap: 12px;
+        padding: 0 12px;
+      }
+
+      .recommended-sidebar {
+        width: 240px;
+      }
+
+      .video-player-container {
+        margin-bottom: 16px;
+      }
+
+      .video-details {
+        padding: 16px;
+      }
+
+      .video-details h1 {
+        font-size: 1.4rem;
+      }
+
+      .sidebar-item {
+        padding: 8px 12px;
+        font-size: 12px;
+        gap: 10px;
+      }
+
+      .sidebar-heading {
+        padding: 8px 12px 4px;
+        font-size: 11px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      header {
+        min-height: 48px !important;
+      }
+
+      .logo-container img {
+        width: 45px !important;
+        height: 45px !important;
+      }
+
+      .logo-container span {
+        font-size: 1rem !important;
+      }
+
+      .sidebar {
+        width: 150px;
+        top: 48px;
+      }
+
+      .player-page {
+        margin-left: 150px;
+        gap: 8px;
+        padding: 0 10px;
+        margin-top: 10px;
+      }
+
+      .recommended-sidebar {
+        width: 200px;
+      }
+
+      .video-player-container {
+        margin-bottom: 12px;
+      }
+
+      .controls {
+        padding: 12px 12px 8px;
+      }
+
+      .buttons {
+        gap: 10px;
+        font-size: 14px;
+      }
+
+      .buttons button {
+        font-size: 16px;
+      }
+
+      .video-details {
+        padding: 12px;
+      }
+
+      .video-details h1 {
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+      }
+
+      .video-meta, .video-description {
+        font-size: 0.9rem;
+      }
+
+      .sidebar-item {
+        padding: 7px 10px;
+        font-size: 11px;
+        gap: 8px;
+      }
+
+      .sidebar-heading {
+        padding: 6px 10px 3px;
+        font-size: 10px;
+      }
+
+      .storage-note {
+        font-size: 10px;
+        padding: 8px;
+        bottom: 12px;
+        left: 10px;
+        right: 10px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      header {
+        min-height: 44px !important;
+      }
+
+      .logo-container img {
+        width: 40px !important;
+        height: 40px !important;
+      }
+
+      .nav-link, .settings-gear {
+        font-size: 0.8rem !important;
+        padding: 6px 8px !important;
+      }
+
+      .sidebar {
+        width: 140px;
+        top: 44px;
+      }
+
+      .player-page {
+        margin-left: 140px;
+        gap: 4px;
+        padding: 0 8px;
+        margin-top: 8px;
+      }
+
+      .recommended-sidebar {
+        display: none;
+      }
+
+      .main-content {
+        width: 100%;
+      }
+
+      .video-player-container {
+        margin-bottom: 10px;
+      }
+
+      .controls {
+        padding: 10px 8px 6px;
+      }
+
+      .progress-container {
+        margin-bottom: 8px;
+      }
+
+      .buttons {
+        gap: 6px;
+        font-size: 12px;
+      }
+
+      .buttons button {
+        font-size: 14px;
+      }
+
+      #time {
+        font-size: 11px;
+      }
+
+      .video-details {
+        padding: 10px;
+      }
+
+      .video-details h1 {
+        font-size: 1rem;
+        margin-bottom: 4px;
+      }
+
+      .video-meta, .video-description {
+        font-size: 0.85rem;
+      }
+
+      .sidebar-item {
+        padding: 6px 8px;
+        font-size: 10px;
+        gap: 6px;
+      }
+
+      .sidebar-heading {
+        padding: 5px 8px 2px;
+        font-size: 9px;
+      }
     }
   </style>
 </head>
@@ -299,6 +634,12 @@
     const min = Math.floor(seconds / 60);
     const sec = Math.floor(seconds % 60);
     return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+  }
+
+  // Sidebar Section Handler (for navigation)
+  function showSection(section) {
+    // Redirect to main watch page with section
+    window.location.href = `watch.html#${section}`;
   }
 
   // Recommended Videos (same as before)
