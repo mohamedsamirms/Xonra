@@ -2549,6 +2549,23 @@ body[data-theme="dark"] .mac-titlebar {
   text-transform: uppercase;
 }
 
+.sidebar-minimize-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: #e0e0e0;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 12px 24px;
+  width: 100%;
+  text-align: left;
+  transition: color 0.2s ease;
+}
+
+.sidebar-minimize-btn:hover {
+  color: var(--accent);
+}
+
 .user-circle {
   display: inline-block;
   width: 24px;
@@ -2575,6 +2592,67 @@ body[data-theme="dark"] .mac-titlebar {
 /* Main content shift */
 .player-page {
   margin-left: 260px;
+}
+
+.watch-content {
+  margin-left: 260px;
+}
+
+/* Mobile sidebar toggle */
+@media (max-width: 900px) {
+  .sidebar-minimize-btn {
+    display: block;
+  }
+
+  .sidebar {
+    transition: width 0.3s ease;
+  }
+
+  .sidebar.minimized {
+    width: 0;
+    overflow: hidden;
+    border-right: none;
+  }
+
+  .sidebar-toggle-btn {
+    display: none;
+    position: fixed;
+    left: 20px;
+    top: 80px;
+    z-index: 85;
+    background: var(--surface-bg);
+    border: 1px solid var(--header-border);
+    color: var(--accent);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    transition: background-color 0.2s ease;
+  }
+
+  .sidebar-toggle-btn:hover {
+    background-color: var(--dropdown-hover);
+  }
+
+  .sidebar.minimized ~ .sidebar-toggle-btn {
+    display: flex;
+  }
+
+  .watch-content {
+    transition: margin-left 0.3s ease;
+    margin-left: 260px;
+  }
+
+  .watch-content.sidebar-minimized {
+    margin-left: 0;
+  }
+
+  .player-page {
+    margin-left: 0;
+  }
 }
 
 .video-actions {

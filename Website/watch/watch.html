@@ -38,6 +38,10 @@
 
 <!-- Sidebar -->
 <aside class="sidebar">
+  <button class="sidebar-minimize-btn" onclick="toggleSidebar()" title="Minimize sidebar">
+    <i class="fas fa-chevron-left"></i>
+  </button>
+  
   <div class="sidebar-section">
     <a href="#" class="sidebar-item" data-section="discover" onclick="showSection('discover'); return false;"><i class="fas fa-compass"></i> Discover</a>
     <a href="#" class="sidebar-item" data-section="channels" onclick="showSection('channels'); return false;"><i class="fas fa-users"></i> Channels</a>
@@ -63,7 +67,11 @@
   </div>
 </aside>
 
-<div class="content">
+<button class="sidebar-toggle-btn" onclick="toggleSidebar()" title="Show sidebar">
+  <i class="fas fa-chevron-right"></i>
+</button>
+
+<div class="content watch-content">
     <h2 id="pageTitle" style="margin: 20px 0; font-size: 1.8rem; color: var(--accent);">Watch</h2>
     <div class="search-bar" style="margin: 25px 0;">
     <input type="text" id="searchInput" placeholder="Search video" onkeyup="searchVideos()">
@@ -305,7 +313,28 @@
     loadVideos();
     loadChannels();
     showSection('discover');
+    
+    // Restore sidebar state on page load
+    const isMinimized = localStorage.getItem('sidebar-minimized') === 'true';
+    if (isMinimized) {
+      const sidebar = document.querySelector('.sidebar');
+      const watchContent = document.querySelector('.watch-content');
+      sidebar.classList.add('minimized');
+      watchContent.classList.add('sidebar-minimized');
+    }
   });
+
+  // Sidebar toggle function
+  function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    const watchContent = document.querySelector('.watch-content');
+    sidebar.classList.toggle('minimized');
+    watchContent.classList.toggle('sidebar-minimized');
+    
+    // Save state to localStorage
+    localStorage.setItem('sidebar-minimized', sidebar.classList.contains('minimized'));
+  }
+
 
 
 </script>
