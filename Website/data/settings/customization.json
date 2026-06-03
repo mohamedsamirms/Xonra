@@ -1,0 +1,27 @@
+{
+  "sliders": [
+    {
+      "id": "cardWidth",
+      "label": "Card Width (px)",
+      "min": 280,
+      "max": 500,
+      "step": 10,
+      "default": 360,
+      "defaultDisplay": "360px"
+    },
+    {
+      "id": "sectionSpacing",
+      "label": "Section Spacing (px)",
+      "min": 60,
+      "max": 150,
+      "step": 4,
+      "default": 88,
+      "defaultDisplay": "88px"
+    }
+  ],
+  "resetButton": {
+    "id": "resetCustomization",
+    "text": "Reset to Defaults"
+  }
+}
+

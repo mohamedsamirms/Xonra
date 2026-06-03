@@ -1,0 +1,46 @@
+[
+    {
+        "copyright": "© 2026 Xonra, all rights reserved",
+        "socials": [
+            {
+                "platform": "TikTok",
+                "link": "https://www.tiktok.com/@xonra_dev_team",
+                "icon": "fab fa-tiktok"
+            },
+            {
+                "platform": "Discord",
+                "link": "https://discord.gg/sH7WCHdYFp",
+                "icon": "fab fa-discord"
+            },
+            {
+                "platform": "GitHub",
+                "link": "https://github.com/mohamedsamirms/Xonra",
+                "icon": "fab fa-github"
+            }
+        ]
+    },
+    {
+        "pages": [
+            {
+                "name": "Home",
+                "link": "/"
+            },
+            {
+                "name": "Our Team",
+                "link": "/OurTeam"
+            },
+            {
+                "name": "Watch",
+                "link": "/watch/watch"
+            },
+            {
+                "name": "Download",
+                "link": "/Download"
+            },
+            {
+                "name": "Settings",
+                "link": "/settings"
+            }
+        ]
+    }
+]

@@ -1,0 +1,11 @@
+{
+  "themes": [
+    { "id": "light", "label": "Light" },
+    { "id": "dark", "label": "Dark" },
+    { "id": "forest", "label": "Forest" },
+    { "id": "ocean", "label": "Ocean" },
+    { "id": "sunset", "label": "Sunset" },
+    { "id": "monochrome", "label": "Mono" }
+  ]
+}
+

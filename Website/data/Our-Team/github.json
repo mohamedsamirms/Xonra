@@ -1,0 +1,21 @@
+{
+  "intro": "A special thank you to our dedicated contributors who've helped shape Xonra through their code, ideas, and passion.",
+  "contributors": [
+    {
+      "username": "mohamedsamirms",
+      "avatar": "../../images/team pfp/mohamedsamirms.jpg",
+      "profile_url": "https://github.com/mohamedsamirms"
+    },
+    {
+      "username": "kritalasy",
+      "avatar": "../../images/team pfp/kritalasy.webp",
+      "profile_url": "https://github.com/kritalasy"
+    },
+    {
+      "username": "randomgithubaccount19837",
+      "avatar": "https://avatars.githubusercontent.com/u/166883639?v=4",
+      "profile_url": "https://github.com/randomgithubaccount19837"
+    }
+  ]
+}
+

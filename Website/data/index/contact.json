@@ -1,0 +1,24 @@
+[
+    {
+        "platform": "Discord",
+        "description": "Contact us on Discord if you need help!",
+        "tags": [
+            "Bug reports",
+            "Help",
+            "Suggestions"
+        ],
+        "link": "https://discord.gg/sH7WCHdYFp",
+        "button_text": "Join our Discord"
+    },
+    {
+        "platform": "GitHub",
+        "description": "Contribute to the GitHub repository!",
+        "tags": [
+            "Contributions",
+            "Help out",
+            "Fixing bugs"
+        ],
+        "link": "https://github.com/mohamedsamirms/Xonra",
+        "button_text": "Contribute to GitHub"
+    }
+]

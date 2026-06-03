@@ -1,0 +1,30 @@
+[
+  {
+    "category": "Minigame • Roblox",
+    "name": "Xonra Minigames",
+    "description": "Jump into a collection of fun and fast-paced minigames created by the Xonra team. Play solo or with friends and enjoy different challenges, modes, and unique gameplay experiences all in one place; some notably include obbies, PvP. Note: this game is pre-alpha.",
+    "meta": ["9+", "Voice Chat", "Fun"],
+    "button_text": "Shutting down :(",
+    "button_class": "ShuttingDown-btn",
+    "link": "/news"
+  },
+  {
+    "category": "??? • GoDot",
+    "name": "XonraBlox",
+    "description": "Our next project, made using Godot Engine. Will take some time to learn and develop. Might release near summer of 2027, however this is very unlikely as this is one of our hardest projects yet. Expect regular updates on how development goes once it starts. May need testers near autumn or winter this year to see how it would work as a collection of multiplayer games.",
+    "meta": ["9+", "Multiplayer", "PvP"],
+    "button_text": "Not started yet",
+    "button_class": "ShuttingDown-btn",
+    "link": "/news"
+  },
+  {
+    "category": "??? • web browser",
+    "name": "Minigames",
+    "description": "some games where you can play directly from your browser",
+    "meta": ["3+", "play vs cpu", "games"],
+    "button_text": "play now",
+    "button_class": "discord-btn",
+    "link": "/minigames"
+  }
+]
+

@@ -1,0 +1,169 @@
+{
+  "team": {
+    "members": [
+      {
+        "name": "mohamedsamirms",
+        "role": "main developer, coder, owner",
+        "discord": "@mohamedsamir196",
+        "avatar": "../../images/team pfp/mohamedsamirms.jpg"
+      },
+      {
+        "name": "Kritalasy",
+        "role": "suggestions guy, mod, tester, coder, website co-owner",
+        "discord": "@kritalasy",
+        "avatar": "../../images/team pfp/kritalasy.webp"
+      },
+      {
+        "name": "ali24",
+        "role": "co-owner, dev",
+        "discord": "@ali25012",
+        "avatar": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-5520FBFCD3444521B825AE855192292D-Png/150/150/AvatarHeadshot/Webp/noFilter"
+      },
+      {
+        "name": "med",
+        "role": "dev, coder",
+        "discord": "@med_acr",
+        "avatar": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-39FDB5A5664D817C0BD46CF843348462-Png/150/150/AvatarHeadshot/Webp/noFilter"
+      },
+      {
+        "name": "noname",
+        "role": "head admin, dc co-owner",
+        "discord": "@nxmm0",
+        "avatar": "../../images/team pfp/noname.webp"
+      },
+      {
+        "name": "pokebear",
+        "role": "mod",
+        "discord": "@kinsleyso0907",
+        "avatar": "../../images/team pfp/pokebear.webp"
+      },
+      {
+        "name": "randomuser",
+        "role": "dev, coder",
+        "discord": "@randomuserlol24879",
+        "avatar": "../../images/team pfp/randomuserlol.webp"
+      },
+      {
+        "name": "Giovanni2002a",
+        "role": "dev, modeler",
+        "discord": "@fdsfdsfsd_00376",
+        "avatar": "../../images/team pfp/fdsfdsfsd_00376.webp"
+      }
+    ]
+  },
+  "github_contributors": {
+    "intro": "A special thank you to our dedicated contributors who've helped shape Xonra through their code, ideas, and passion.",
+    "contributors": [
+      {
+        "username": "mohamedsamirms",
+        "avatar": "../../images/team pfp/mohamedsamirms.jpg",
+        "profile_url": "https://github.com/mohamedsamirms"
+      },
+      {
+        "username": "kritalasy",
+        "avatar": "../../images/team pfp/kritalasy.webp",
+        "profile_url": "https://github.com/kritalasy"
+      },
+      {
+        "username": "randomgithubaccount19837",
+        "avatar": "https://avatars.githubusercontent.com/u/166883639?v=4",
+        "profile_url": "https://github.com/randomgithubaccount19837"
+      }
+    ]
+  },
+  "co_owners": {
+    "intro": "The ones who started this project off.",
+    "owners": [
+      {
+        "name": "Mohamed Samir",
+        "description": "Xonra, discord server and website co-owner",
+        "avatar": "../../images/team pfp/mohamedsamirms.jpg"
+      },
+      {
+        "name": "ali24",
+        "description": "Xonra co-owner as a whole",
+        "avatar": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-5520FBFCD3444521B825AE855192292D-Png/150/150/AvatarHeadshot/Webp/noFilter"
+      },
+      {
+        "name": "NoName",
+        "description": "discord server co-owner, head admin",
+        "avatar": "../../images/team pfp/noname.webp"
+      },
+      {
+        "name": "Kritalasy",
+        "description": "website co-owner and one of main website contributors",
+        "avatar": "../../images/team pfp/kritalasy.webp"
+      }
+    ]
+  },
+  "developers": {
+    "intro": "The guys doing all the work into making the projects possible.",
+    "developers": [
+      {
+        "name": "Mohamed Samir",
+        "avatar": "../../images/team pfp/mohamedsamirms.jpg"
+      },
+      {
+        "name": "ali24",
+        "avatar": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-5520FBFCD3444521B825AE855192292D-Png/150/150/AvatarHeadshot/Webp/noFilter"
+      },
+      {
+        "name": "med",
+        "description": "guy to talk to about Xonra minigames",
+        "avatar": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-39FDB5A5664D817C0BD46CF843348462-Png/150/150/AvatarHeadshot/Webp/noFilter"
+      },
+      {
+        "name": "randomuser",
+        "avatar": "../../images/team pfp/mohamedsamirms.jpg"
+      },
+      {
+        "name": "Giovanni2002a",
+        "description": "modeler too",
+        "avatar": "../../images/team pfp/fdsfdsfsd_00376.webp"
+      }
+    ]
+  },
+  "support": {
+    "intro": "People who can help with any questions and support the dev team.",
+    "members": [
+      {
+        "name": "kritalasy",
+        "description": "suggestions guy, mod",
+        "avatar": "../../images/team pfp/kritalasy.webp"
+      },
+      {
+        "name": "NoName",
+        "description": "head admin",
+        "avatar": "../../images/team pfp/noname.webp"
+      },
+      {
+        "name": "pokebear",
+        "description": "moderator",
+        "avatar": "../../images/team pfp/noname.webp"
+      },
+      {
+        "name": "mohamedsamirms",
+        "description": "developer, owner",
+        "subtitle": "call me mohamedsamirms, (DM's always open)",
+        "avatar": "../../images/team pfp/mohamedsamirms.jpg"
+      }
+    ]
+  },
+  "cta": {
+    "discord": {
+      "text": "Want to connect with the team?",
+      "link": "https://discord.gg/sH7WCHdYFp",
+      "button_text": "Join our Discord"
+    },
+    "teams_work": {
+      "text": "Want to see what the team's work?",
+      "link": "/teams-work",
+      "button_text": "view team's work"
+    }
+  },
+  "footer": {
+    "rating_link": "/rating",
+    "copyright": "© 2026 Xonra, all rights reserved"
+  }
+}
+

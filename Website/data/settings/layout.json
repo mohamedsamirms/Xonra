@@ -1,0 +1,8 @@
+{
+  "layouts": [
+    { "id": "default", "label": "Default" },
+    { "id": "compact", "label": "Compact" },
+    { "id": "spacious", "label": "Spacious" }
+  ]
+}
+

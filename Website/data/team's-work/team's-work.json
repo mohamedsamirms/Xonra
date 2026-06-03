@@ -1,0 +1,57 @@
+{
+  "page": {
+    "eyebrow": "Creative showcase",
+    "title": "Teams' Work",
+    "intro": "A curated look at the people shaping Xonra's personality through fan art. You can submit on our discord some of your own fan-made content, which will be credited to you and you only. Help make this website and our projects feel more... right ahd lively."
+  },
+  "stats": [
+    { "value": 1, "label": "featured artist" },
+    { "value": 2, "label": "spotlight pieces" },
+    { "value": 2026, "label": "current gallery drop" }
+  ],
+  "preview": {
+    "back": "../../images/teams'-work/krit's art2.png",
+    "front": "../../images/teams'-work/krit's art.jpg"
+  },
+  "artist": {
+    "spotlightLabel": "Artist spotlight",
+    "name": "kritalasy",
+    "description": "Not very good artwork and imorovements can be made, but you can help improve it if you want by sumbitting some on our discord.",
+    "pfp": "../../images/team pfp/kritalasy.webp",
+    "role": "Illustration and concept art",
+    "headline": "Visual storytelling for the Xonra world",
+    "bio": "This gallery highlights recent pieces from kritalasy, featuring stylized characters that give the project a more distinct visual identity. As Tze says, a \"Shenanigans\" feeling."
+  },
+  "artworks": [
+    {
+      "image": "images/teams'-work/krit's art.jpg",
+      "featured": true,
+      "caption": [
+        "Naoya if he could black flash",
+        "Doing some Shenanigans"
+      ]
+    },
+    {
+      "image": "images/teams'-work/krit's art2.png",
+      "featured": false,
+      "caption": [
+        "POV: most non-toxic conversation",
+        "Roblox Bedwars minigame"
+      ]
+    }
+  ],
+  "slideshow": {
+    "items": [
+      {
+        "image": "images/teams'-work/krit's art.jpg",
+        "text": "Naoya if he could black flash. Doing some Shenanigans."
+      },
+      {
+        "image": "images/teams'-work/krit's art2.png",
+        "text": "POV: most non-toxic conversation. Roblox bedwars minigames."
+      }
+    ]
+  },
+  "warning": "THIS FAN-MADE CONTENT IS TRANSFORMATIVE AND OWNED BY XONRA AND KRITALASY, ITS SHOWING ARTWORK FROM A TEAM MEMBER"
+}
+

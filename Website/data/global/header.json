@@ -1,0 +1,18 @@
+[
+    {
+        "name": "Home",
+        "link": "/"
+    },
+    {
+        "name": "Our Team",
+        "link": "/our-team"
+    },
+    {
+        "name": "Watch",
+        "link": "/watch"
+    },
+    {
+        "name": "Settings",
+        "link": "/settings"
+    }
+]

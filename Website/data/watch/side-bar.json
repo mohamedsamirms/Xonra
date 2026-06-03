@@ -1,0 +1,8 @@
+[
+  { "section": "discover", "title": "Discover", "icon": "fas fa-compass" },
+  { "section": "channels", "title": "Channels", "icon": "fas fa-users" },
+  { "section": "likes", "title": "Likes", "icon": "fas fa-thumbs-up" },
+  { "section": "favorites", "title": "Favourites", "icon": "fas fa-heart" },
+  { "section": "history", "title": "Watch History", "icon": "fas fa-history" }
+]
+

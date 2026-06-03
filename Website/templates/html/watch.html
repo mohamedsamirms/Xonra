@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3772280062787057" crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Xonra – Watch</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="../css/styles.css">
+  <script src="../js/scripts.js" defer></script>
+  <script src="../js/animations.js" defer></script>
+</head>
+<body>
+
+<!-- Top Navigation Bar -->
+<header>
+  <a href="../" class="logo-container logo-link">
+    <img src="../../images/Xonra-darkmode.png" alt="Xonra" style="height:42px;">
+    <span class="Xonra_topleft">Xonra</span>
+  </a>
+
+  <button class="nav-toggle" type="button">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="header-actions">
+    <nav class="navigation">
+      <a href="../" class="nav-link">Home</a>
+      <a href="../OurTeam" class="nav-link">Our Team</a>
+      <a href="watch.html" class="nav-link active">Watch</a>
+      <a href="../settings" class="nav-link settings-gear">
+        <i class="fas fa-cog"></i>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <button class="sidebar-minimize-btn" onclick="toggleSidebar()" title="Minimize sidebar">
+    <i class="fas fa-chevron-left"></i>
+  </button>
+  
+  <div class="sidebar-section">
+    <a href="#" class="sidebar-item" data-section="discover" onclick="showSection('discover'); return false;"><i class="fas fa-compass"></i> Discover</a>
+    <a href="#" class="sidebar-item" data-section="channels" onclick="showSection('channels'); return false;"><i class="fas fa-users"></i> Channels</a>
+  </div>
+
+  <hr>
+
+  <div class="sidebar-section">
+    <a href="#" class="sidebar-item" data-section="likes" onclick="showSection('likes'); return false;"><i class="fas fa-thumbs-up"></i> Likes</a>
+    <a href="#" class="sidebar-item" data-section="favorites" onclick="showSection('favorites'); return false;"><i class="fas fa-heart"></i> Favourites</a>
+    <a href="#" class="sidebar-item" data-section="history" onclick="showSection('history'); return false;"><i class="fas fa-history"></i> Watch History</a>
+  </div>
+
+  <hr>
+
+  <div class="sidebar-section">
+    <div class="sidebar-heading">Subscriptions</div>
+    <a href="#" class="sidebar-item"><span class="user-circle"></span> Xonra Official</a>
+  </div>
+
+  <div class="storage-note">
+    <small>Everything here is stored on your local browser storage</small>
+  </div>
+</aside>
+
+<button class="sidebar-toggle-btn" onclick="toggleSidebar()" title="Show sidebar">
+  <i class="fas fa-chevron-right"></i>
+</button>
+
+<div class="content watch-content">
+    <h2 id="pageTitle" style="margin: 20px 0; font-size: 1.8rem; color: var(--accent);">Watch</h2>
+    <div class="search-bar" style="margin: 25px 0;">
+    <input type="text" id="searchInput" placeholder="Search video" onkeyup="searchVideos()">
+  
+  <div class="video-gallery" id="videoGallery">
+    <div class="loading">Loading videos...</div>
+  </div>
+</div>
+
+<script>
+  let allVideos = [];
+  let allChannels = [];
+
+  // Extract duration from video file
+  function getDuration(videoUrl) {
+    return new Promise((resolve) => {
+      const video = document.createElement('video');
+      video.src = videoUrl;
+      video.addEventListener('loadedmetadata', () => {
+        const duration = Math.floor(video.duration);
+        const minutes = Math.floor(duration / 60);
+        const seconds = duration % 60;
+        const formatted = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        resolve(formatted);
+      }, { once: true });
+      video.addEventListener('error', () => resolve('0:00'), { once: true });
+    });
+  }
+
+  // Generate thumbnail from video
+  function getThumbnail(videoUrl) {
+    return new Promise((resolve) => {
+      const video = document.createElement('video');
+      video.src = videoUrl;
+      video.currentTime = 1; // Seek to 1 second
+      video.addEventListener('seeked', () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 320;
+        canvas.height = 180;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(video, 0, 0, 320, 180);
+        canvas.toBlob((blob) => {
+          const url = URL.createObjectURL(blob);
+          resolve(url);
+        }, 'image/jpeg', 0.7);
+      }, { once: true });
+      video.addEventListener('error', () => resolve(''), { once: true });
+    });
+  }
+
+  async function loadVideos() {
+    try {
+      const response = await fetch('../../data/watch/videos.json');
+      allVideos = await response.json();
+      
+      // Extract duration and thumbnail for each video
+      for (let video of allVideos) {
+        if (video.duration === '0:00' || video.duration === '') {
+          video.duration = await getDuration(video.url);
+        }
+        if (video.thumbnail === '' || video.thumbnail.includes('vid-images')) {
+          video.thumbnail = await getThumbnail(video.url);
+        }
+      }
+      
+      renderVideos(allVideos);
+    } catch (error) {
+      console.error(error);
+      document.getElementById('videoGallery').innerHTML = '<p style="color:red; text-align:center; grid-column:1/-1;">Failed to load videos.</p>';
+    }
+  }
+
+  async function loadChannels() {
+    try {
+      const response = await fetch('../../data/watch/channels.json');
+      allChannels = await response.json();
+    } catch (error) {
+      console.error(error);
+      console.log('Failed to load channels');
+    }
+  }
+
+  function renderVideos(videos) {
+    const gallery = document.getElementById('videoGallery');
+    gallery.innerHTML = '';
+
+    if (!videos || videos.length === 0) {
+      gallery.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#aaa;padding:60px;">No videos found.</p>';
+      return;
+    }
+
+    videos.forEach(video => {
+      const isLiked = isVideoLiked(video.id);
+      const isFavorite = isVideoFavorited(video.id);
+
+      const videoHTML = `
+        <div class="video-item" data-id="${video.id}">
+          <a href="watch-player.html?id=${video.id}" class="thumbnail-container">
+            <img src="${video.thumbnail}" alt="${video.title}" class="thumbnail">
+            <div class="duration">${video.duration || '0:00'}</div>
+            <button onclick="toggleSubscribe(this); event.stopImmediatePropagation();" class="subscribe-btn">+</button>
+            <div class="play-overlay"><i class="fas fa-play"></i></div>
+          </a>
+          <div class="video-info">
+            <h3 class="video-title">${video.title}</h3>
+            <p class="video-publisher">${video.publisher}</p>
+            <p class="video-meta">${video.time} • ${video.views || '1K views'}</p>
+            
+            <div class="video-actions">
+              <button onclick="toggleLike(${video.id}); event.stopImmediatePropagation();" class="action-btn ${isLiked ? 'liked' : ''}">
+                <i class="fas fa-thumbs-up"></i>
+              </button>
+              <button onclick="toggleFavorite(${video.id}); event.stopImmediatePropagation();" class="action-btn ${isFavorite ? 'favorited' : ''}">
+                <i class="fas fa-heart"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+      gallery.innerHTML += videoHTML;
+    });
+  }
+
+  function toggleSubscribe(btn) {
+    if (btn.classList.contains('subscribed')) {
+      btn.classList.remove('subscribed');
+      btn.innerHTML = '+';
+    } else {
+      btn.classList.add('subscribed');
+      btn.innerHTML = '✓';
+    }
+  }
+
+  function getLikedVideos() { return JSON.parse(localStorage.getItem('xonra_liked') || '[]'); }
+  function getFavoritedVideos() { return JSON.parse(localStorage.getItem('xonra_favorites') || '[]'); }
+
+  function isVideoLiked(id) { return getLikedVideos().includes(id); }
+  function isVideoFavorited(id) { return getFavoritedVideos().includes(id); }
+
+  function toggleLike(id) {
+    let liked = getLikedVideos();
+    if (liked.includes(id)) liked = liked.filter(v => v !== id);
+    else liked.push(id);
+    localStorage.setItem('xonra_liked', JSON.stringify(liked));
+    renderVideos(allVideos);
+  }
+
+  function toggleFavorite(id) {
+    let favs = getFavoritedVideos();
+    if (favs.includes(id)) favs = favs.filter(v => v !== id);
+    else favs.push(id);
+    localStorage.setItem('xonra_favorites', JSON.stringify(favs));
+    renderVideos(allVideos);
+  }
+
+  function renderChannels(channels) {
+    const gallery = document.getElementById('videoGallery');
+    gallery.innerHTML = '';
+
+    if (!channels || channels.length === 0) {
+      gallery.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#aaa;padding:60px;">No channels available.</p>';
+      return;
+    }
+
+    channels.forEach(channel => {
+      const channelHTML = `
+        <div class="channel-item">
+          <div class="channel-thumbnail-container">
+            <img src="${channel.thumbnail}" alt="${channel.name}" class="channel-thumbnail">
+            <div class="channel-overlay">
+              <button class="subscribe-channel-btn">Subscribe</button>
+            </div>
+          </div>
+          <div class="channel-info">
+            <h3 class="channel-name">${channel.name}</h3>
+            <p class="channel-description">${channel.description}</p>
+            <p class="channel-stats">${channel.subscribers} subscribers • ${channel.videoCount} videos</p>
+          </div>
+        </div>
+      `;
+      gallery.innerHTML += channelHTML;
+    });
+  }
+
+  function searchVideos() {
+    const query = document.getElementById('searchInput').value.toLowerCase().trim();
+    const filtered = allVideos.filter(v => v.title.toLowerCase().includes(query));
+    renderVideos(filtered);
+  }
+
+  function showSection(section) {
+    // Update page title
+    const titleElement = document.getElementById('pageTitle');
+    const sectionTitles = {
+      'discover': 'Watch',
+      'likes': 'Liked Videos',
+      'favorites': 'Favourites',
+      'history': 'Watch History',
+      'channels': 'Channels'
+    };
+    titleElement.textContent = sectionTitles[section] || 'Watch';
+
+    // Update active sidebar item
+    document.querySelectorAll('.sidebar-item[data-section]').forEach(item => {
+      item.classList.remove('active');
+    });
+    const activeItem = document.querySelector(`.sidebar-item[data-section="${section}"]`);
+    if (activeItem) {
+      activeItem.classList.add('active');
+    }
+
+    // Clear search
+    document.getElementById('searchInput').value = '';
+
+    const gallery = document.getElementById('videoGallery');
+
+    if (section === 'discover') {
+      renderVideos(allVideos);
+    } else if (section === 'likes') {
+      const likedIds = getLikedVideos();
+      const likedVideos = allVideos.filter(v => likedIds.includes(v.id));
+      renderVideos(likedVideos.length ? likedVideos : []);
+      if (!likedVideos.length) gallery.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#aaa;padding:60px;">No liked videos yet.</p>';
+    } else if (section === 'favorites') {
+      const favIds = getFavoritedVideos();
+      const favVideos = allVideos.filter(v => favIds.includes(v.id));
+      renderVideos(favVideos.length ? favVideos : []);
+      if (!favVideos.length) gallery.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#aaa;padding:60px;">No favourites yet.</p>';
+    } else if (section === 'history') {
+      gallery.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#aaa;padding:60px;">Watch History coming soon...</p>';
+    } else if (section === 'channels') {
+      renderChannels(allChannels);
+      if (!allChannels.length) gallery.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#aaa;padding:60px;">No channels available.</p>';
+    }
+  }
+
+  // Initialize with Discover section
+  document.addEventListener('DOMContentLoaded', () => {
+    loadVideos();
+    loadChannels();
+    showSection('discover');
+    
+    // Restore sidebar state on page load
+    const isMinimized = localStorage.getItem('sidebar-minimized') === 'true';
+    if (isMinimized) {
+      const sidebar = document.querySelector('.sidebar');
+      const watchContent = document.querySelector('.watch-content');
+      sidebar.classList.add('minimized');
+      watchContent.classList.add('sidebar-minimized');
+    }
+  });
+
+  // Sidebar toggle function
+  function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    const watchContent = document.querySelector('.watch-content');
+    sidebar.classList.toggle('minimized');
+    watchContent.classList.toggle('sidebar-minimized');
+    
+    // Save state to localStorage
+    localStorage.setItem('sidebar-minimized', sidebar.classList.contains('minimized'));
+  }
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "tools": [
+    {
+      "category": "Watch • platform",
+      "name": "Xonra Watch",
+      "description": "A platform where you can watch videos like youtube but with no ads. It will be a platform where you can watch content created by us and other creators. Note: this project is still in it's early access, you might find a bug. if you find one email us at xonra_devteam@protonmail.com or tell us in discord",
+      "tags": ["16+", "Videos", "platform"],
+      "link": "/watch/watch.html"
+    }
+  ]
+}
+
