@@ -74,21 +74,21 @@
 
 <section class="main" id="home">
     <div class="hero-content">
-        <h2><br>Please choose the bug you wanna report<span></span></h2>
-        <h3></h3>
-        <a href="#" class="main-btn">look down vro</a>
+        <h2><br>Help us improve Xonra<span></span></h2>
+        <h3>Found a bug? Let us know!</h3>
+        <a href="#ReportBug" class="main-btn">Report an issue</a>
     </div>
 </section>
 
 <section class="projects" id="ReportBug">
-    <h2 class="title">Categories</h2>
+    <h2 class="title">Report Categories</h2>
     <div class="content">
         <div class="project_card">
             <div class="project_info">
                 <p class="project_category">404 • Page not opening</p>
-                <h3 class="project_name">404 page</h3>
+                <h3 class="project_name">404 Error</h3>
                 <p class="project_description">
-                   if you are trying to go to a page and 404.html page shows up report the page here.
+                   If you're trying to access a page and see a 404 error, report it here.
                 </p>
 
                 <button
@@ -100,13 +100,100 @@
 
             </div>
         </div>
-        
 
-        
+        <div class="project_card">
+            <div class="project_info">
+                <p class="project_category">🐛 • Game Issues</p>
+                <h3 class="project_name">Game Bugs</h3>
+                <p class="project_description">
+                   Report bugs in Roblox games, XonraBlox, or any game-related issues.
+                </p>
+
+                <button
+                   id="game-bugs"
+                   rel="noopener noreferrer"
+                   class="discord-btn">
+                   Report
+                </button>
+
+            </div>
+        </div>
+
+        <div class="project_card">
+            <div class="project_info">
+                <p class="project_category">⚡ • Performance</p>
+                <h3 class="project_name">Performance Issues</h3>
+                <p class="project_description">
+                   Report lag, crashes, slow loading, or performance problems on any platform.
+                </p>
+
+                <button
+                   id="performance"
+                   rel="noopener noreferrer"
+                   class="discord-btn">
+                   Report
+                </button>
+
+            </div>
+        </div>
+
+        <div class="project_card">
+            <div class="project_info">
+                <p class="project_category">🔐 • Account</p>
+                <h3 class="project_name">Login & Account</h3>
+                <p class="project_description">
+                   Issues with signing in, authentication, or account-related problems.
+                </p>
+
+                <button
+                   id="account"
+                   rel="noopener noreferrer"
+                   class="discord-btn">
+                   Report
+                </button>
+
+            </div>
+        </div>
+
+        <div class="project_card">
+            <div class="project_info">
+                <p class="project_category">✨ • Feature Request</p>
+                <h3 class="project_name">Feature Request</h3>
+                <p class="project_description">
+                   Suggest new features or improvements you'd like to see in our games.
+                </p>
+
+                <button
+                   id="feature-request"
+                   rel="noopener noreferrer"
+                   class="discord-btn">
+                   Submit
+                </button>
+
+            </div>
+        </div>
+
+        <div class="project_card">
+            <div class="project_info">
+                <p class="project_category">❓ • Other</p>
+                <h3 class="project_name">Other Issues</h3>
+                <p class="project_description">
+                   Anything else not covered above - UI glitches, content issues, etc.
+                </p>
+
+                <button
+                   id="other"
+                   rel="noopener noreferrer"
+                   class="discord-btn">
+                   Report
+                </button>
+
+            </div>
+        </div>
     </div>
 </section>
 
-<!-- Modal Window -->
+<!-- Modal Window for 404 -->
 <div id="modal-404" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000; justify-content: center; align-items: center;">
     <div style="background-color: rgb(36, 39, 39); border: 1px solid var(--header-border); border-radius: 8px; padding: 30px; width: 90%; max-width: 600px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
@@ -114,33 +201,106 @@
             <button id="close-modal-404" style="background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-primary);">×</button>
         </div>
         <p>Please describe the page that showed the 404 error:</p>
-        <textarea id="bug-report" style="width: 100%; height: 150px; padding: 10px; border: 1px solid var(--header-border); border-radius: 4px; background-color: var(--bg-secondary); color: var(--text-primary); font-family: Arial, sans-serif;" placeholder="Enter your bug report here..."></textarea>
+        <textarea id="bug-report-404" style="width: 100%; height: 150px; padding: 10px; border: 1px solid var(--header-border); border-radius: 4px; background-color: var(--bg-secondary); color: var(--text-primary); font-family: Arial, sans-serif;" placeholder="Enter your bug report here..."></textarea>
         <button id="submit-bug-404" class="discord-btn" style="margin-top: 15px; padding: 10px 20px; background-color: var(--primary-color); color: white; border: none; border-radius: 4px; cursor: pointer; width: 100%;">Submit Report</button>
         <p id="bug-submit-status-404" style="margin: 12px 0 0; min-height: 1.2em; color: var(--text-secondary);"></p>
+    </div>
+</div>
+
+<!-- Generic Modal for Other Categories -->
+<div id="modal-generic" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000; justify-content: center; align-items: center;">
+    <div style="background-color: rgb(36, 39, 39); border: 1px solid var(--header-border); border-radius: 8px; padding: 30px; width: 90%; max-width: 600px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h2 id="modal-title" style="margin: 0;">Report Issue</h2>
+            <button id="close-modal-generic" style="background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-primary);">×</button>
+        </div>
+        <p id="modal-description">Please describe your issue:</p>
+        <textarea id="bug-report-generic" style="width: 100%; height: 150px; padding: 10px; border: 1px solid var(--header-border); border-radius: 4px; background-color: var(--bg-secondary); color: var(--text-primary); font-family: Arial, sans-serif;" placeholder="Enter your report here..."></textarea>
+        <button id="submit-bug-generic" class="discord-btn" style="margin-top: 15px; padding: 10px 20px; background-color: var(--primary-color); color: white; border: none; border-radius: 4px; cursor: pointer; width: 100%;">Submit Report</button>
+        <p id="bug-submit-status-generic" style="margin: 12px 0 0; min-height: 1.2em; color: var(--text-secondary);"></p>
     </div>
 </div>
 
 
 <!-----------------------------------------------------------------------JS------------------------------------------------------------------------>
 <script>
-  const modal = document.getElementById('modal-404');
+  // Category configuration
+  const categories = {
+    '404': {
+      title: 'Report 404 Bug',
+      description: 'Please describe the page that showed the 404 error:',
+      modal: 'modal-404'
+    },
+    'game-bugs': {
+      title: 'Report Game Bug',
+      description: 'Please describe the bug you encountered in detail:',
+      modal: 'modal-generic'
+    },
+    'performance': {
+      title: 'Report Performance Issue',
+      description: 'Please describe the performance problem you experienced:',
+      modal: 'modal-generic'
+    },
+    'account': {
+      title: 'Report Account Issue',
+      description: 'Please describe your account or login issue:',
+      modal: 'modal-generic'
+    },
+    'feature-request': {
+      title: 'Submit Feature Request',
+      description: 'What feature would you like to see added?',
+      modal: 'modal-generic'
+    },
+    'other': {
+      title: 'Report Other Issue',
+      description: 'Please describe your issue:',
+      modal: 'modal-generic'
+    }
+  };
+
+  // Setup 404 modal
+  const modal404 = document.getElementById('modal-404');
   const btn404 = document.getElementById('404');
-  const closeBtn = document.getElementById('close-modal-404');
+  const closeBtn404 = document.getElementById('close-modal-404');
   
   btn404.addEventListener('click', function() {
-    modal.style.display = 'flex';
+    modal404.style.display = 'flex';
   });
   
-  closeBtn.addEventListener('click', function() {
-    modal.style.display = 'none';
+  closeBtn404.addEventListener('click', function() {
+    modal404.style.display = 'none';
   });
+
+  // Setup generic modal
+  const modalGeneric = document.getElementById('modal-generic');
+  const closeBtnGeneric = document.getElementById('close-modal-generic');
   
+  closeBtnGeneric.addEventListener('click', function() {
+    modalGeneric.style.display = 'none';
+  });
+
+  // Setup buttons for all categories
+  Object.keys(categories).forEach(categoryId => {
+    if (categoryId === '404') return; // Skip 404 as it has its own modal
+    
+    const btn = document.getElementById(categoryId);
+    if (btn) {
+      btn.addEventListener('click', function() {
+        const config = categories[categoryId];
+        document.getElementById('modal-title').textContent = config.title;
+        document.getElementById('modal-description').textContent = config.description;
+        document.getElementById('bug-report-generic').dataset.category = categoryId;
+        modalGeneric.style.display = 'flex';
+      });
+    }
+  });
+
+  // 404 submit handler
   const submitBtn404 = document.getElementById('submit-bug-404');
-  const bugReportTextarea = document.getElementById('bug-report');
+  const bugReportTextarea404 = document.getElementById('bug-report-404');
   const statusEl404 = document.getElementById('bug-submit-status-404');
 
-  async function submitBugReport404(payload) {
-    // Prefer absolute Vercel route: /api/BugReport
+  async function submitBugReport(payload) {
     const candidates = [
       '/api/BugReport',
       './api/BugReport',
@@ -171,8 +331,9 @@
     throw new Error(lastErr || 'Failed to submit bug report');
   }
 
+  // 404 button handler
   submitBtn404.addEventListener('click', async () => {
-    const report = (bugReportTextarea?.value || '').trim();
+    const report = (bugReportTextarea404?.value || '').trim();
 
     if (!report) {
       statusEl404.textContent = 'Please write something before submitting.';
@@ -190,13 +351,12 @@
         page: window.location.href
       };
 
-      const result = await submitBugReport404(payload);
+      const result = await submitBugReport(payload);
       statusEl404.textContent = result?.success ? 'Bug report sent!' : 'Report submitted.';
 
-      // Close after a short delay
       setTimeout(() => {
-        modal.style.display = 'none';
-        bugReportTextarea.value = '';
+        modal404.style.display = 'none';
+        bugReportTextarea404.value = '';
       }, 600);
     } catch (err) {
       statusEl404.textContent = `Failed to send: ${err.message || err}`;
@@ -206,15 +366,57 @@
     }
   });
 
-  // Close modal when clicking outside of it
+  // Generic button handler
+  const submitBtnGeneric = document.getElementById('submit-bug-generic');
+  const bugReportTextareaGeneric = document.getElementById('bug-report-generic');
+  const statusElGeneric = document.getElementById('bug-submit-status-generic');
+
+  submitBtnGeneric.addEventListener('click', async () => {
+    const report = (bugReportTextareaGeneric?.value || '').trim();
+    const category = bugReportTextareaGeneric.dataset.category || 'other';
+
+    if (!report) {
+      statusElGeneric.textContent = 'Please write something before submitting.';
+      return;
+    }
+
+    submitBtnGeneric.disabled = true;
+    submitBtnGeneric.textContent = 'Submitting...';
+    statusElGeneric.textContent = '';
+
+    try {
+      const payload = {
+        category: category,
+        message: report,
+        page: window.location.href
+      };
+
+      const result = await submitBugReport(payload);
+      statusElGeneric.textContent = result?.success ? 'Report sent!' : 'Report submitted.';
+
+      setTimeout(() => {
+        modalGeneric.style.display = 'none';
+        bugReportTextareaGeneric.value = '';
+      }, 600);
+    } catch (err) {
+      statusElGeneric.textContent = `Failed to send: ${err.message || err}`;
+    } finally {
+      submitBtnGeneric.disabled = false;
+      submitBtnGeneric.textContent = 'Submit Report';
+    }
+  });
+
+  // Close modals when clicking outside
   window.addEventListener('click', function(event) {
-    if (event.target === modal) {
-      modal.style.display = 'none';
+    if (event.target === modal404) {
+      modal404.style.display = 'none';
+    }
+    if (event.target === modalGeneric) {
+      modalGeneric.style.display = 'none';
     }
   });
 </script>
 
-<!---------------------------------------------------------------------FOOTER------------------------------------------------------------------------->
 <!---------------------------------------------------------------------FOOTER------------------------------------------------------------------------->
 <footer style="text-align: center; padding: 40px 20px; color: var(--text-secondary); font-size: 0.9rem; border-top: 1px solid var(--header-border);">
     
