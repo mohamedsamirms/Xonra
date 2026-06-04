@@ -201,13 +201,115 @@
                 <a class="btn btn-primary" href="/">Go Home</a>
                 <a class="btn btn-secondary" href="https://discord.gg/sH7WCHdYFp">Help</a>
                 <a class="btn btn-secondary" href="mailto:xonra_devteam@protonmail.com">Mail us</a>
+                <button type="button" id="report-404" class="btn btn-secondary" style="cursor:pointer; border-style:solid;">Report</button>
             </div>
 
             <nav class="links" aria-label="Helpful links">
                 <a href="Website/settings.html">Settings</a>
                 <a href="Website/rating.html">Rate the site</a>
             </nav>
+
+            <div id="modal-404" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.55); z-index:1000; justify-content:center; align-items:center; padding:24px;">
+                <div style="background-color: rgb(36, 39, 39); border: 1px solid var(--panel-border); border-radius: 12px; padding: 24px; width: 100%; max-width: 640px; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.38);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px;">
+                        <h2 style="margin:0; font-size:1.25rem;">Report 404 Bug</h2>
+                        <button id="close-modal-404" type="button" style="background:none; border:none; font-size:28px; cursor:pointer; color: var(--text); line-height:1;">×</button>
+                    </div>
+
+                    <p style="margin:0 0 10px; color: var(--muted);">Please describe the page that showed the 404 error:</p>
+                    <textarea id="bug-report-404" style="width:100%; height:140px; padding: 12px; border: 1px solid var(--panel-border); border-radius: 10px; background: rgba(255,255,255,0.03); color: var(--text); font-family: Arial, sans-serif;" placeholder="Enter your bug report here..."></textarea>
+
+                    <button id="submit-bug-404" class="btn btn-primary" style="width:100%; margin-top: 14px; border:none;">Submit Report</button>
+                    <p id="bug-submit-status-404" style="margin: 12px 0 0; min-height: 1.2em; color: var(--muted);"></p>
+                </div>
+            </div>
         </section>
-    </main>
+
+    <script>
+        (function () {
+            const modal = document.getElementById('modal-404');
+            const btn = document.getElementById('report-404');
+            const closeBtn = document.getElementById('close-modal-404');
+            const submitBtn = document.getElementById('submit-bug-404');
+            const textarea = document.getElementById('bug-report-404');
+            const statusEl = document.getElementById('bug-submit-status-404');
+
+            if (!modal || !btn || !closeBtn || !submitBtn || !textarea || !statusEl) return;
+
+            btn.addEventListener('click', function () {
+                modal.style.display = 'flex';
+            });
+
+            closeBtn.addEventListener('click', function () {
+                modal.style.display = 'none';
+            });
+
+            window.addEventListener('click', function (event) {
+                if (event.target === modal) modal.style.display = 'none';
+            });
+
+            async function submitBugReport(payload) {
+                const candidates = ['/api/BugReport', './api/BugReport', '../api/BugReport'];
+                let lastErr;
+
+                for (const url of candidates) {
+                    try {
+                        const res = await fetch(url, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+
+                        const data = await res.json().catch(() => null);
+                        if (!res.ok) {
+                            lastErr = data?.error || `Request failed (${res.status})`;
+                            continue;
+                        }
+
+                        return data;
+                    } catch (e) {
+                        lastErr = e?.message || String(e);
+                    }
+                }
+
+                throw new Error(lastErr || 'Failed to submit bug report');
+            }
+
+            submitBtn.addEventListener('click', async function () {
+                const report = (textarea.value || '').trim();
+
+                if (!report) {
+                    statusEl.textContent = 'Please write something before submitting.';
+                    return;
+                }
+
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Submitting...';
+                statusEl.textContent = '';
+
+                try {
+                    const payload = {
+                        category: '404',
+                        message: report,
+                        page: window.location.href
+                    };
+
+                    const result = await submitBugReport(payload);
+                    statusEl.textContent = result?.success ? 'Bug report sent!' : 'Report submitted.';
+
+                    setTimeout(function () {
+                        modal.style.display = 'none';
+                        textarea.value = '';
+                    }, 600);
+                } catch (err) {
+                    statusEl.textContent = `Failed to send: ${err.message || err}`;
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Submit Report';
+                }
+            });
+        })();
+    </script>
+
 </body>
 </html>
