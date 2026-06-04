@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3772280062787057"
+     crossorigin="anonymous"></script>
+    
+    <meta name="yandex-verification" content="e2a25d997c110d3f" />
+    <meta name="google-site-verification" content="AdIz_bRhs8cElxQrhPT_2cGMKeZ4MuWoLpaWjWE_EwQ" />
+    <meta name="description" content="Xonra is a game development team creating fun minigames and experiences across platforms like Roblox.">
+     <meta name="keywords" content="Xonra, download, Roblox games, XonraBlox, cobra"><!--for the google autocorrect -->
+    <meta name="author" content="Xonra">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../images/Xonra-logo.png" sizes="any">
+    <meta property="og:site_name" content="Xonra" />
+    <meta property="og:title" content="Xonra" />
+    <meta property="og:description" content="Xonra is a game development team creating fun minigames and experiences across platforms like Roblox." />
+    <meta property="og:image" content="../../images/Xonra-logo.png" />
+    
+    
+    <script src="../js/animations.js" defer></script>
+
+
+    <title>Xonra</title>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link rel="stylesheet" href="styles.css">
+
+    <link rel="icon" type="image/x-icon" href="../../images/Xonra-logo.png">
+    
+    <script src="js/scripts.js" defer></script>
+</head>
+<body>
+
+<header>
+    <a href="/" class="logo-container logo-link" aria-label="Xonra home">
+        <img src="../../images/Xonra-logo.png" alt="Xonra Logo">
+        <span class="Xonra_topleft">Xonra</span>
+    </a>
+
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Open navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <div class="header-actions" id="site-menu">
+        <nav class="navigation" aria-label="Primary">
+            <a href="/" class="nav-link" aria-current="page">Home</a>
+            <div class="dropdown">
+                <button class="home-dropdown-btn" type="button" aria-haspopup="true" aria-expanded="false">
+                     <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="#about">About</a>
+                    <a href="#tools">Tools</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#help">Help</a>
+                    <!-- <a href="#githubrepo">Github Repository</a> -->
+                </div>
+            </div>
+            <a href="/OurTeam" class="nav-link our-team-link">Our Team</a>
+            <a href="/Download" class="nav-link">Download</a>
+            <a href="/ReportBug" class="nav-link News-link">Report a bug</a>
+            <a href="/settings" class="nav-link settings-gear" aria-label="Settings">
+                <i class="fas fa-cog"></i>
+                <span class="settings-label">Settings</span>
+            </a>
+        </nav>
+    </div>
+</header>
+
+<section class="main" id="home">
+    <div class="hero-content">
+        <h2><br>Please choose the bug you wanna report<span></span></h2>
+        <h3></h3>
+        <a href="#" class="main-btn">look down vro</a>
+    </div>
+</section>
+
+<section class="projects" id="ReportBug">
+    <h2 class="title">Categories</h2>
+    <div class="content">
+        <div class="project_card">
+            <div class="project_info">
+                <p class="project_category">404 • Page not opening</p>
+                <h3 class="project_name">404 page</h3>
+                <p class="project_description">
+                   if you are trying to go to a page and 404.html page shows up report the page here.
+                </p>
+
+                <button
+                   id="404"
+                   rel="noopener noreferrer"
+                   class="discord-btn">
+                   Report
+                </button>
+
+            </div>
+        </div>
+        
+
+        
+    </div>
+</section>
+
+<!-- Modal Window -->
+<div id="modal-404" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000; justify-content: center; align-items: center;">
+    <div style="background-color: rgb(36, 39, 39); border: 1px solid var(--header-border); border-radius: 8px; padding: 30px; width: 90%; max-width: 600px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h2 style="margin: 0;">Report 404 Bug</h2>
+            <button id="close-modal-404" style="background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-primary);">×</button>
+        </div>
+        <p>Please describe the page that showed the 404 error:</p>
+        <textarea id="bug-report" style="width: 100%; height: 150px; padding: 10px; border: 1px solid var(--header-border); border-radius: 4px; background-color: var(--bg-secondary); color: var(--text-primary); font-family: Arial, sans-serif;" placeholder="Enter your bug report here..."></textarea>
+        <button id="submit-bug-404" class="discord-btn" style="margin-top: 15px; padding: 10px 20px; background-color: var(--primary-color); color: white; border: none; border-radius: 4px; cursor: pointer; width: 100%;">Submit Report</button>
+        <p id="bug-submit-status-404" style="margin: 12px 0 0; min-height: 1.2em; color: var(--text-secondary);"></p>
+    </div>
+</div>
+
+
+<!-----------------------------------------------------------------------JS------------------------------------------------------------------------>
+<script>
+  const modal = document.getElementById('modal-404');
+  const btn404 = document.getElementById('404');
+  const closeBtn = document.getElementById('close-modal-404');
+  
+  btn404.addEventListener('click', function() {
+    modal.style.display = 'flex';
+  });
+  
+  closeBtn.addEventListener('click', function() {
+    modal.style.display = 'none';
+  });
+  
+  const submitBtn404 = document.getElementById('submit-bug-404');
+  const bugReportTextarea = document.getElementById('bug-report');
+  const statusEl404 = document.getElementById('bug-submit-status-404');
+
+  async function submitBugReport404(payload) {
+    // Prefer absolute Vercel route: /api/BugReport
+    const candidates = [
+      '/api/BugReport',
+      './api/BugReport',
+      '../api/BugReport'
+    ];
+
+    let lastErr;
+    for (const url of candidates) {
+      try {
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json().catch(() => null);
+        if (!res.ok) {
+          lastErr = data?.error || `Request failed (${res.status})`;
+          continue;
+        }
+
+        return data;
+      } catch (e) {
+        lastErr = e?.message || String(e);
+      }
+    }
+
+    throw new Error(lastErr || 'Failed to submit bug report');
+  }
+
+  submitBtn404.addEventListener('click', async () => {
+    const report = (bugReportTextarea?.value || '').trim();
+
+    if (!report) {
+      statusEl404.textContent = 'Please write something before submitting.';
+      return;
+    }
+
+    submitBtn404.disabled = true;
+    submitBtn404.textContent = 'Submitting...';
+    statusEl404.textContent = '';
+
+    try {
+      const payload = {
+        category: '404',
+        message: report,
+        page: window.location.href
+      };
+
+      const result = await submitBugReport404(payload);
+      statusEl404.textContent = result?.success ? 'Bug report sent!' : 'Report submitted.';
+
+      // Close after a short delay
+      setTimeout(() => {
+        modal.style.display = 'none';
+        bugReportTextarea.value = '';
+      }, 600);
+    } catch (err) {
+      statusEl404.textContent = `Failed to send: ${err.message || err}`;
+    } finally {
+      submitBtn404.disabled = false;
+      submitBtn404.textContent = 'Submit Report';
+    }
+  });
+
+  // Close modal when clicking outside of it
+  window.addEventListener('click', function(event) {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+</script>
+
+<!---------------------------------------------------------------------FOOTER------------------------------------------------------------------------->
+<!---------------------------------------------------------------------FOOTER------------------------------------------------------------------------->
+<footer style="text-align: center; padding: 40px 20px; color: var(--text-secondary); font-size: 0.9rem; border-top: 1px solid var(--header-border);">
+    
+    
+    <h5 class="sub-title">Follow us on</h5>
+    <div class="social-icons">
+      <!--  <a href="https://www.youtube.com/@Xonra" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+            <i class="fab fa-youtube"></i>
+        </a>
+        <a href="https://twitter.com/XonraGames" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+            <i class="fab fa-twitter"></i>
+        </a>
+        <a href="https://www.instagram.com/xonra.games/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <i class="fab fa-instagram"></i>-->
+        </a>
+        <a href="https://www.tiktok.com/@xonra_dev_team" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+            <i class="fab fa-tiktok"></i>
+        </a>
+    </div>
+    <!-- <a target="" rel="noopener noreferrer" href="rating.html"> Rate and give suggestions here </a> -->
+    <p>&copy; 2026 Xonra, all rights reserved</p>
+</footer>
+</body>
+</html>
